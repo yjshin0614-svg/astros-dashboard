@@ -10,7 +10,7 @@
 <meta name="theme-color" content="#000000">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="apple-touch-icon" href="icon-180.png">
-<title>ASTROS Dashboard</title>
+<title>ASTROS Dashboard (YS)</title>
 <link rel="stylesheet" href="styles/main.css">
 <link rel="stylesheet" href="styles/ipad.css">
 </head>
@@ -46,50 +46,11 @@
     <div class="foot"><span id="cal-src"></span></div>
   </section>
 </div></div>
-<div class="panel" data-v="kbo"><div class="pgrid">
-  <section class="col col-wide">
-    <div class="col-head"><span class="col-title">KBO 리그</span><span class="col-sub" id="kb-sub"></span><span class="col-meta" id="kb-src">불러오는 중</span></div>
-    <div class="kb">
-      <div class="kb-sec"><h4>팀 순위</h4><div id="kb-st"></div></div>
-      <div class="kb-sec"><h4 id="kb-t0h">오늘 경기</h4><div id="kb-t0"></div></div>
-      <div class="kb-sec"><h4 id="kb-t1h">내일 경기</h4><div id="kb-t1"></div></div>
-    </div>
-    <div class="tk"><div class="tk-in" id="kb-tk"></div></div>
+<div class="panel" data-v="herald"><div class="pgrid">  <section class="col col-wide">
+    <div class="kf-head"><span class="col-title">The Korea Herald</span><span class="col-sub" id="hz-sub"></span><span class="col-meta" id="hz-src">불러오는 중</span></div>
+    <div class="kf-prog"><i id="hz-prog"></i></div>
+    <div class="hz" id="hz"></div>
   </section>
-
-</div></div>
-<div class="panel" data-v="flights"><div class="pgrid">
-  <section class="col col-wide">
-    <div class="col-head"><span class="col-title">서울 상공</span><span class="col-sub" id="ae-sub"></span><span class="col-meta" id="ae-src">불러오는 중</span></div>
-    <div class="ae">
-      <div class="radar"><div class="sweep"><i></i></div><svg id="radar" viewBox="0 0 640 640" preserveAspectRatio="xMidYMid meet"></svg></div>
-      <div class="ae-side">
-        <div class="ae-stats" id="ae-stats"></div>
-        <div class="fl-list" id="fl-list"></div>
-      </div>
-    </div>
-  </section>
-
-</div></div>
-<div class="panel" data-v="futebol"><div class="pgrid">
-  <section class="col col-wide">
-    <div class="col-head"><span class="col-title" id="fb-title">브라질레이랑</span><span class="col-sub" id="fb-sub"></span><span class="col-meta" id="fb-src">불러오는 중</span></div>
-    <div class="fb">
-      <div class="fb-tbl" id="fb-t1"></div>
-      <div class="fb-tbl" id="fb-t2"></div>
-      <div class="fb-m" id="fb-m"></div>
-    </div>
-    <div class="fb-legend" id="fb-legend"></div>
-  </section>
-
-</div></div>
-<div class="panel" data-v="news"><div class="pgrid">
-  <section class="col col-news">
-    <div class="nw-head"><span class="nw-title" id="nw-title">브라질 브리핑</span><span class="nw-date" id="nw-date"></span><span class="nw-meta" id="nw-meta">불러오는 중</span></div>
-    <div class="nw-prog"><i id="nw-prog"></i></div>
-    <div class="nw-story" id="nw-story"></div>
-  </section>
-
 </div></div>
 <div class="panel" data-v="fx"><div class="pgrid">
   <section class="col">
@@ -167,7 +128,8 @@
 <script>
 /* ===================== CONFIG ===================== */
 const VARIANT = 'all';
-const on = v => VARIANT === v || VARIANT === 'all';
+const PANELS = ["schedule", "herald", "fx", "grains", "metals", "latam"];
+const on = v => VARIANT === v || (VARIANT === 'all' && PANELS.indexOf(v) >= 0);
 let CUR = '';                 // schedule | fx | metals
 const CALENDAR_API_URL = '';   // iPad: 주소는 첫 실행 때 입력해 기기에만 저장        // Apps Script 웹앱 URL (?token= 포함)
 const LAT = 37.5384, LON = 127.0822;           // 서울 광진구 능동로 (사무실)
@@ -1123,6 +1085,7 @@ function refreshData() {
   if (on('futebol')) refreshFootball(true);
   if (on('kbo')) refreshKbo(true);
   if (on('latam')) refreshKrNews();
+  if (on('herald')) refreshHeraldView();
 }
 function init() {
   if (started) { update(); return; }
@@ -1143,8 +1106,8 @@ if (typeof iCUE_initialized !== 'undefined' && iCUE_initialized) init();
 if (typeof iCUE_initialized === 'undefined') setTimeout(init, 200);
 
 /* ===================== iPad: 화면 전환·설정 ===================== */
-const IPAD_ORDER = [["schedule", "일정"], ["kbo", "야구"], ["flights", "항공"], ["futebol", "축구"], ["news", "뉴스"], ["fx", "환율"], ["grains", "곡물"], ["metals", "금속"], ["latam", "중남미"]];
-const THEME_OF = {"futebol": "futebol", "fx": "ipanema", "grains": "safra", "kbo": "diamond", "latam": "andes", "metals": "brass", "news": "brasil", "schedule": "seoul", "flights": "aero"}, BG_MAP = {"futebol": ["resources/bg/futebol-morning-0.svg", "resources/bg/futebol-morning-1.svg", "resources/bg/futebol-afternoon-0.svg", "resources/bg/futebol-afternoon-1.svg", "resources/bg/futebol-evening-0.svg", "resources/bg/futebol-evening-1.svg", "resources/bg/futebol-night-0.svg", "resources/bg/futebol-night-1.svg"], "fx": ["resources/bg/fx-morning-0.svg", "resources/bg/fx-morning-1.svg", "resources/bg/fx-afternoon-0.svg", "resources/bg/fx-afternoon-1.svg", "resources/bg/fx-evening-0.svg", "resources/bg/fx-evening-1.svg", "resources/bg/fx-night-0.svg", "resources/bg/fx-night-1.svg"], "grains": ["resources/bg/grains-morning-0.svg", "resources/bg/grains-morning-1.svg", "resources/bg/grains-afternoon-0.svg", "resources/bg/grains-afternoon-1.svg", "resources/bg/grains-evening-0.svg", "resources/bg/grains-evening-1.svg", "resources/bg/grains-night-0.svg", "resources/bg/grains-night-1.svg"], "kbo": ["resources/bg/kbo-morning-0.svg", "resources/bg/kbo-morning-1.svg", "resources/bg/kbo-afternoon-0.svg", "resources/bg/kbo-afternoon-1.svg", "resources/bg/kbo-evening-0.svg", "resources/bg/kbo-evening-1.svg", "resources/bg/kbo-night-0.svg", "resources/bg/kbo-night-1.svg"], "latam": ["resources/bg/latam-morning-0.svg", "resources/bg/latam-morning-1.svg", "resources/bg/latam-afternoon-0.svg", "resources/bg/latam-afternoon-1.svg", "resources/bg/latam-evening-0.svg", "resources/bg/latam-evening-1.svg", "resources/bg/latam-night-0.svg", "resources/bg/latam-night-1.svg"], "metals": ["resources/bg/metals-morning-0.svg", "resources/bg/metals-morning-1.svg", "resources/bg/metals-afternoon-0.svg", "resources/bg/metals-afternoon-1.svg", "resources/bg/metals-evening-0.svg", "resources/bg/metals-evening-1.svg", "resources/bg/metals-night-0.svg", "resources/bg/metals-night-1.svg"], "news": ["resources/bg/news-morning-0.svg", "resources/bg/news-morning-1.svg", "resources/bg/news-afternoon-0.svg", "resources/bg/news-afternoon-1.svg", "resources/bg/news-evening-0.svg", "resources/bg/news-evening-1.svg", "resources/bg/news-night-0.svg", "resources/bg/news-night-1.svg"], "schedule": ["resources/bg/schedule-morning-0.svg", "resources/bg/schedule-morning-1.svg", "resources/bg/schedule-afternoon-0.svg", "resources/bg/schedule-afternoon-1.svg", "resources/bg/schedule-evening-0.svg", "resources/bg/schedule-evening-1.svg", "resources/bg/schedule-night-0.svg", "resources/bg/schedule-night-1.svg"], "flights": ["resources/bg/flights-morning-0.svg", "resources/bg/flights-morning-1.svg", "resources/bg/flights-afternoon-0.svg", "resources/bg/flights-afternoon-1.svg", "resources/bg/flights-evening-0.svg", "resources/bg/flights-evening-1.svg", "resources/bg/flights-night-0.svg", "resources/bg/flights-night-1.svg"]};
+const IPAD_ORDER = [["schedule", "일정"], ["herald", "뉴스"], ["fx", "환율"], ["grains", "곡물"], ["metals", "금속"], ["latam", "중남미"]];
+const THEME_OF = {"futebol": "futebol", "fx": "ipanema", "grains": "safra", "latam": "andes", "metals": "brass", "schedule": "seoul", "herald": "herald"}, BG_MAP = {"futebol": ["resources/bg/futebol-morning-0.svg", "resources/bg/futebol-morning-1.svg", "resources/bg/futebol-afternoon-0.svg", "resources/bg/futebol-afternoon-1.svg", "resources/bg/futebol-evening-0.svg", "resources/bg/futebol-evening-1.svg", "resources/bg/futebol-night-0.svg", "resources/bg/futebol-night-1.svg"], "fx": ["resources/bg/fx-morning-0.svg", "resources/bg/fx-morning-1.svg", "resources/bg/fx-afternoon-0.svg", "resources/bg/fx-afternoon-1.svg", "resources/bg/fx-evening-0.svg", "resources/bg/fx-evening-1.svg", "resources/bg/fx-night-0.svg", "resources/bg/fx-night-1.svg"], "grains": ["resources/bg/grains-morning-0.svg", "resources/bg/grains-morning-1.svg", "resources/bg/grains-afternoon-0.svg", "resources/bg/grains-afternoon-1.svg", "resources/bg/grains-evening-0.svg", "resources/bg/grains-evening-1.svg", "resources/bg/grains-night-0.svg", "resources/bg/grains-night-1.svg"], "latam": ["resources/bg/latam-morning-0.svg", "resources/bg/latam-morning-1.svg", "resources/bg/latam-afternoon-0.svg", "resources/bg/latam-afternoon-1.svg", "resources/bg/latam-evening-0.svg", "resources/bg/latam-evening-1.svg", "resources/bg/latam-night-0.svg", "resources/bg/latam-night-1.svg"], "metals": ["resources/bg/metals-morning-0.svg", "resources/bg/metals-morning-1.svg", "resources/bg/metals-afternoon-0.svg", "resources/bg/metals-afternoon-1.svg", "resources/bg/metals-evening-0.svg", "resources/bg/metals-evening-1.svg", "resources/bg/metals-night-0.svg", "resources/bg/metals-night-1.svg"], "schedule": ["resources/bg/schedule-morning-0.svg", "resources/bg/schedule-morning-1.svg", "resources/bg/schedule-afternoon-0.svg", "resources/bg/schedule-afternoon-1.svg", "resources/bg/schedule-evening-0.svg", "resources/bg/schedule-evening-1.svg", "resources/bg/schedule-night-0.svg", "resources/bg/schedule-night-1.svg"], "herald": ["resources/bg/herald-morning-0.svg", "resources/bg/herald-morning-1.svg", "resources/bg/herald-afternoon-0.svg", "resources/bg/herald-afternoon-1.svg", "resources/bg/herald-evening-0.svg", "resources/bg/herald-evening-1.svg", "resources/bg/herald-night-0.svg", "resources/bg/herald-night-1.svg"]};
 function panelOrder() {
   let s = ''; try { s = localStorage.getItem('astros_order') || ''; } catch (e) {}
   const byLabel = {}; IPAD_ORDER.forEach(p => { byLabel[p[1]] = p[0]; });
@@ -1206,6 +1169,63 @@ function saveSetup() {
   showPanel(panelOrder().indexOf(first) >= 0 ? first : panelOrder()[0], false);
   if (!getApiUrl()) openSetup(true);
 })();
+
+/* ===================== The Korea Herald (Apps Script mode=herald) =====================
+ * 기사 1건씩 60초. 제목 고정, 영문|한글 본문이 함께 천천히 위로 흐르고, 하단 학습 영역은 고정 */
+const HZ_SEC = 60;
+let hzItems = [], hzIdx = 0, hzTimer = null, hzScroll = null, hzSig = '', hzRetry = null;
+const reEsc = s => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+function hzMark(p, words) {   // 학습 단어를 본문에서 강조
+  let h = esc(p);
+  words.forEach(w => { if (w && w.w) h = h.replace(new RegExp('\\b(' + reEsc(w.w) + ')\\b', 'i'), '<b>$1</b>'); });
+  return h;
+}
+function hzShow() {
+  const box = $('hz'), bar = $('hz-prog');
+  if (hzScroll) { clearTimeout(hzScroll); hzScroll = null; }
+  if (!hzItems.length) { box.innerHTML = '<div class="hz-none">오늘 기사를 준비하고 있습니다. 잠시 후 표시됩니다.</div>'; return; }
+  hzIdx = hzIdx % hzItems.length;
+  const n = hzItems[hzIdx], t = new Date(n.time), en = n.en || [], ko = n.ko || [];
+  const rows = en.length ? en.map((p, i) => '<div class="hz-row"><div class="en">' + hzMark(p, n.words || []) + '</div><div class="ko">' + esc(ko[i] || '') + '</div></div>').join('')
+    : '<div class="hz-none">본문을 불러오지 못했습니다.</div>';
+  const words = (n.words || []).map(w => '<div><div class="w">' + esc(w.w) + '</div><div class="wk">' + esc(w.ko) + '</div></div>').join('');
+  const sents = (n.sents || []).map(s => '<div class="hz-sent"><div class="se">' + esc(s.en) + '</div><div class="sk">' + esc(s.ko) + '</div></div>').join('');
+  box.innerHTML = '<div class="hz-meta"><span class="sec' + (n.sec === 'World' ? ' w' : '') + '">' + esc(n.secKo || n.sec) + '</span><span>' + (n.today ? '' : '어제 ') + hhmm(t) + '</span>' +
+    '<span class="cnt">' + (hzIdx + 1) + ' / ' + hzItems.length + '</span></div>' +
+    '<div class="hz-t nw-fade">' + esc(n.title) + '</div><div class="hz-tk">' + esc(n.titleKo || '') + '</div>' +
+    '<div class="hz-cols"><span>English</span><span>한국어 번역</span></div>' +
+    '<div class="hz-body" id="hz-body"><div class="hz-in" id="hz-in">' + rows + '</div></div>' +
+    '<div class="hz-study"><div><h5>Words</h5><div class="hz-words">' + (words || '<div class="wk">-</div>') + '</div></div>' +
+    '<div><h5>Useful sentences</h5>' + (sents || '<div class="sk">-</div>') + '</div></div>';
+  bar.style.transition = 'none'; bar.style.width = '0'; void bar.offsetWidth;
+  bar.style.transition = 'width ' + HZ_SEC + 's linear'; bar.style.width = '100%';
+  const inner = $('hz-in'), view = $('hz-body');
+  requestAnimationFrame(() => {
+    if (!view.clientHeight) return;                                     // 숨겨진 상태에서는 계산 안 함
+    const over = inner.scrollHeight - view.clientHeight + 40;
+    if (over > 0) hzScroll = setTimeout(() => { inner.style.transition = 'transform ' + (HZ_SEC - 8) + 's linear'; inner.style.transform = 'translateY(-' + over + 'px)'; }, 4000);
+  });
+}
+function hzStart() { if (hzTimer) clearInterval(hzTimer); hzShow(); hzTimer = setInterval(() => { hzIdx++; hzShow(); }, HZ_SEC * 1000); }
+async function refreshHeraldView() {
+  let j;
+  try { j = await apiCall('mode=herald', 60000); }
+  catch (e) { $('hz-src').textContent = '기사 서버 연결 실패, 다음 갱신 때 재시도'; $('hz-src').className = 'col-meta err'; if (!hzItems.length) hzStart(); return; }
+  if (j.building) {
+    $('hz-src').textContent = '오늘 기사 준비 중 (약 1~2분)'; $('hz-src').className = 'col-meta';
+    if (!hzItems.length) hzStart();
+    if (hzRetry) clearTimeout(hzRetry); hzRetry = setTimeout(refreshHeraldView, 90000);
+    return;
+  }
+  const now = new Date();
+  $('hz-sub').textContent = (now.getMonth() + 1) + '월 ' + now.getDate() + '일   경제·국제 ' + (j.items || []).length + '건, 기사당 ' + HZ_SEC + '초';
+  $('hz-src').textContent = '구글 번역   ' + hhmm(new Date(j.at || Date.now())) + ' 준비' + ((j.errors || []).length ? '   일부 실패' : '');
+  $('hz-src').className = 'col-meta' + ((j.errors || []).length ? ' err' : '');
+  const sig = (j.items || []).map(n => n.title).join('|');
+  if (sig !== hzSig) { hzSig = sig; hzItems = j.items || []; hzIdx = 0; hzStart(); }
+}
+const _showPanelBase = showPanel;
+showPanel = function (v, save) { _showPanelBase(v, save); if (v === 'herald' && hzItems.length) hzStart(); };
 
 </script>
 </body>

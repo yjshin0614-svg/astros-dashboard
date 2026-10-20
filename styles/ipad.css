@@ -1,3 +1,29 @@
+/* ===== The Korea Herald (영문 + 한글 + 학습) ===== */
+.theme-herald { --bg:#070d18; --a1:#e0f2fe; --a2:#f87171; --a3:#60a5fa; --g1:rgba(96,165,250,.11); --g2:rgba(248,113,113,.07); --g3:rgba(224,242,254,.06); }
+.hz { flex:1; min-height:0; display:flex; flex-direction:column; padding-top:12px; }
+.hz-meta { display:flex; align-items:center; gap:12px; font-size:17px; color:var(--t2); flex-shrink:0; }
+.hz-meta .sec { font-size:15px; color:var(--bg); background:var(--a3); padding:2px 10px; border-radius:5px; }
+.hz-meta .sec.w { background:var(--a2); }
+.hz-meta .cnt { margin-left:auto; color:var(--a1); font-variant-numeric:tabular-nums; }
+.hz-t { font-size:34px; line-height:1.28; margin-top:8px; flex-shrink:0; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; }
+.hz-tk { font-size:21px; color:var(--t2); margin-top:4px; flex-shrink:0; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.hz-cols { display:grid; grid-template-columns:1fr 1fr; gap:40px; font-size:14px; color:var(--t3); margin-top:12px; padding-bottom:6px; border-bottom:1px solid var(--line); flex-shrink:0; }
+.hz-body { flex:1; min-height:0; overflow:hidden; position:relative; padding-top:10px;
+  -webkit-mask-image:linear-gradient(180deg, #000 0, #000 88%, transparent); mask-image:linear-gradient(180deg, #000 0, #000 88%, transparent); }
+.hz-in { will-change:transform; }
+.hz-row { display:grid; grid-template-columns:1fr 1fr; gap:40px; margin-bottom:16px; }
+.hz-row .en { font-size:21px; line-height:1.6; color:var(--t0); }
+.hz-row .en b { font-weight:400; color:var(--a1); border-bottom:1px solid var(--a3); }
+.hz-row .ko { font-size:20px; line-height:1.65; color:var(--t1); }
+.hz-study { flex-shrink:0; height:262px; border-top:1px solid var(--line); padding-top:12px; display:grid; grid-template-columns:1fr 1.3fr; gap:40px; }
+.hz-study h5 { font-weight:400; font-size:16px; color:var(--a3); margin-bottom:8px; }
+.hz-words { display:grid; grid-template-columns:1fr 1fr; gap:10px 24px; }
+.hz-words .w { font-size:27px; color:var(--a1); }
+.hz-words .wk { font-size:18px; color:var(--t1); margin-top:2px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.hz-sent { margin-bottom:9px; }
+.hz-sent .se { font-size:18px; line-height:1.45; color:var(--t0); }
+.hz-sent .sk { font-size:15px; line-height:1.4; color:var(--t2); margin-top:3px; }
+.hz-none { font-size:20px; color:var(--t2); line-height:1.7; padding-top:20px; }
 
 /* ===================== iPad (2048x1536 가로) ===================== */
 html, body { margin:0; width:100%; height:100%; background:#000; overflow:hidden; -webkit-user-select:none; user-select:none; -webkit-touch-callout:none; -webkit-tap-highlight-color:transparent; }
