@@ -1,0 +1,24 @@
+
+/* ===================== iPad (2048x1536 가로) ===================== */
+html, body { margin:0; width:100%; height:100%; background:#000; overflow:hidden; -webkit-user-select:none; user-select:none; -webkit-touch-callout:none; -webkit-tap-highlight-color:transparent; }
+#stage { position:fixed; left:0; top:0; width:2048px; height:1536px; transform-origin:0 0; }
+#app { width:100%; height:100%; }
+.ihead { position:relative; z-index:2; height:210px; display:grid; grid-template-columns:auto 1fr auto; align-items:center; gap:48px; padding:0 60px; border-bottom:1px solid var(--line); }
+.ihead .date { font-size:46px; } .ihead .dow { font-size:30px; } .ihead .date-sub { font-size:19px; margin-top:12px; }
+.ihead .clock { justify-content:center; margin:0; } .ihead .hm { font-size:156px; letter-spacing:-6px; } .ihead .sec { font-size:46px; }
+.ihead .wx { gap:22px; } .ihead .wx-temp { font-size:64px; } .ihead .wx-icon { font-size:58px; }
+.ihead .dp { position:absolute; left:60px; right:60px; bottom:-2px; } .ihead .dp .dp-track { height:3px; }
+.icontent { position:relative; z-index:1; height:1236px; padding:22px 20px 0; box-sizing:border-box; }
+.panel { display:none; } .panel.on { display:block; }
+.pgrid { width:1606px; height:970px; transform:scale(1.25); transform-origin:0 0; display:grid; grid-template-columns:1fr 1.15fr; padding:6px 0; box-sizing:border-box; }
+.pgrid > .col:first-child { border-left:none; }
+.ifoot { position:absolute; left:0; right:0; bottom:0; height:90px; z-index:2; display:flex; align-items:center; justify-content:center; gap:20px; border-top:1px solid var(--line); background:linear-gradient(180deg, transparent, rgba(0,0,0,.25)); }
+.ifoot .pages { gap:12px; } .ifoot .pages span { font-size:25px; padding:10px 24px; border-radius:10px; cursor:pointer; }
+#gear { position:absolute; right:40px; font-size:34px; color:var(--t3); padding:10px 16px; cursor:pointer; }
+#setup { position:absolute; inset:0; z-index:50; display:none; align-items:center; justify-content:center; background:rgba(0,0,0,.82); }
+#setup .box { width:1300px; padding:56px; border:1px solid var(--line); border-radius:24px; background:var(--bg); color:var(--t0); }
+#setup h2 { font-weight:400; font-size:40px; margin-bottom:28px; } #setup label { display:block; font-size:24px; color:var(--t2); margin:24px 0 10px; }
+#setup input { width:100%; box-sizing:border-box; font-size:24px; padding:18px; border-radius:12px; border:1px solid var(--line); background:rgba(255,255,255,.06); color:var(--t0); font-family:inherit; -webkit-user-select:text; user-select:text; }
+#setup .row { display:flex; gap:20px; margin-top:36px; align-items:center; } #setup button { font-size:26px; padding:16px 40px; border-radius:12px; border:none; font-family:inherit; }
+#btn-save { background:var(--a1); color:var(--bg); } #btn-cancel { background:rgba(255,255,255,.1); color:var(--t1); }
+#setup-msg { font-size:20px; color:var(--a2); margin-left:auto; }

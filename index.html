@@ -1,0 +1,1212 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="ASTROS">
+<meta name="theme-color" content="#000000">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="icon-180.png">
+<title>ASTROS Dashboard</title>
+<link rel="stylesheet" href="styles/main.css">
+<link rel="stylesheet" href="styles/ipad.css">
+</head>
+<body>
+<div id="stage"><div id="app" class="theme-seoul">
+<div class="bg" id="bg"><img id="bg-a" alt=""><img id="bg-b" alt=""></div>
+<header class="ihead">
+  <div><div class="date-line"><span class="date" id="date">--</span><span class="dow" id="dow">--</span></div><div class="date-sub" id="date-sub">--</div></div>
+  <div class="clock"><span class="hm" id="hm">--:--</span><span class="sec" id="sec">:--</span><span class="ampm" id="ampm"></span></div>
+  <div class="wx">
+    <div class="wx-icon" id="wx-icon"></div><div class="wx-temp" id="wx-temp">--°</div>
+    <div><div class="wx-desc"><span id="wx-desc">날씨 불러오는 중</span><span class="wx-loc">서울 광진구</span></div><div class="wx-sub" id="wx-sub"></div></div>
+    <div class="wx-side"><div class="wx-hl" id="wx-hl"></div><div class="wx-rain" id="wx-rain"></div></div>
+  </div>
+  <div class="dp"><div class="dayprog-head" style="display:none"><span id="dp-pct"></span></div><div class="dp-track"><div class="dp-fill" id="dp-fill"></div></div></div>
+</header>
+<main class="icontent">
+<div class="panel" data-v="schedule"><div class="pgrid">
+  <section class="col col-days">
+    <div class="half">
+      <div class="col-head"><span class="col-title">오늘</span><span class="col-sub" id="d0-label"></span><span class="next-line" id="next-line"></span></div>
+      <div class="ev-list" id="list-today"><div class="empty-note">일정을 불러오는 중입니다</div></div>
+    </div>
+    <div class="half">
+      <div class="col-head"><span class="col-title">내일</span><span class="col-sub" id="d1-label"></span><span class="col-meta" id="d1-count"></span></div>
+      <div class="ev-list" id="list-tomorrow"></div>
+    </div>
+  </section>
+
+  <section class="col">
+    <div class="col-head"><span class="col-title">이번주 일정</span><span class="col-sub" id="wk-range"></span><span class="col-meta" id="wk-count"></span></div>
+    <div class="wk-list" id="list-week"></div>
+    <div class="foot"><span id="cal-src"></span></div>
+  </section>
+</div></div>
+<div class="panel" data-v="kbo"><div class="pgrid">
+  <section class="col col-wide">
+    <div class="col-head"><span class="col-title">KBO 리그</span><span class="col-sub" id="kb-sub"></span><span class="col-meta" id="kb-src">불러오는 중</span></div>
+    <div class="kb">
+      <div class="kb-sec"><h4>팀 순위</h4><div id="kb-st"></div></div>
+      <div class="kb-sec"><h4 id="kb-t0h">오늘 경기</h4><div id="kb-t0"></div></div>
+      <div class="kb-sec"><h4 id="kb-t1h">내일 경기</h4><div id="kb-t1"></div></div>
+    </div>
+    <div class="tk"><div class="tk-in" id="kb-tk"></div></div>
+  </section>
+
+</div></div>
+<div class="panel" data-v="flights"><div class="pgrid">
+  <section class="col col-wide">
+    <div class="col-head"><span class="col-title">서울 상공</span><span class="col-sub" id="ae-sub"></span><span class="col-meta" id="ae-src">불러오는 중</span></div>
+    <div class="ae">
+      <div class="radar"><div class="sweep"><i></i></div><svg id="radar" viewBox="0 0 640 640" preserveAspectRatio="xMidYMid meet"></svg></div>
+      <div class="ae-side">
+        <div class="ae-stats" id="ae-stats"></div>
+        <div class="fl-list" id="fl-list"></div>
+      </div>
+    </div>
+  </section>
+
+</div></div>
+<div class="panel" data-v="futebol"><div class="pgrid">
+  <section class="col col-wide">
+    <div class="col-head"><span class="col-title" id="fb-title">브라질레이랑</span><span class="col-sub" id="fb-sub"></span><span class="col-meta" id="fb-src">불러오는 중</span></div>
+    <div class="fb">
+      <div class="fb-tbl" id="fb-t1"></div>
+      <div class="fb-tbl" id="fb-t2"></div>
+      <div class="fb-m" id="fb-m"></div>
+    </div>
+    <div class="fb-legend" id="fb-legend"></div>
+  </section>
+
+</div></div>
+<div class="panel" data-v="news"><div class="pgrid">
+  <section class="col col-news">
+    <div class="nw-head"><span class="nw-title" id="nw-title">브라질 브리핑</span><span class="nw-date" id="nw-date"></span><span class="nw-meta" id="nw-meta">불러오는 중</span></div>
+    <div class="nw-prog"><i id="nw-prog"></i></div>
+    <div class="nw-story" id="nw-story"></div>
+  </section>
+
+</div></div>
+<div class="panel" data-v="fx"><div class="pgrid">
+  <section class="col">
+    <div class="col-head"><span class="col-title">환율</span><span class="col-meta" id="fx-src">불러오는 중</span></div>
+    <div class="q-list">
+      <div class="q-row"><div class="flags"><img class="f1" src="resources/flags/us.svg" alt=""><img class="f2" src="resources/flags/kr.svg" alt=""></div><div><div class="q-kr">원/달러</div><div class="q-en">USD → KRW</div></div><div class="q-val"><div class="px" id="px-usdkrw">--</div><div class="chg flat" id="ch-usdkrw">--</div></div></div>
+      <div class="q-row"><div class="flags"><img class="f1" src="resources/flags/us.svg" alt=""><img class="f2" src="resources/flags/br.svg" alt=""></div><div><div class="q-kr">헤알/달러</div><div class="q-en">USD → BRL</div></div><div class="q-val"><div class="px" id="px-usdbrl">--</div><div class="chg flat" id="ch-usdbrl">--</div></div></div>
+      <div class="q-row"><div class="flags"><img class="f1" src="resources/flags/br.svg" alt=""><img class="f2" src="resources/flags/kr.svg" alt=""></div><div><div class="q-kr">원/헤알</div><div class="q-en">BRL → KRW</div></div><div class="q-val"><div class="px" id="px-brlkrw">--</div><div class="chg flat" id="ch-brlkrw">--</div></div></div>
+      <div class="q-row"><div class="flags"><img class="f1" src="resources/flags/eu.svg" alt=""><img class="f2" src="resources/flags/kr.svg" alt=""></div><div><div class="q-kr">원/유로</div><div class="q-en">EUR → KRW</div></div><div class="q-val"><div class="px" id="px-eurkrw">--</div><div class="chg flat" id="ch-eurkrw">--</div></div></div>
+      <div class="q-row"><div class="flags"><img class="f1" src="resources/flags/jp.svg" alt=""><img class="f2" src="resources/flags/kr.svg" alt=""></div><div><div class="q-kr">원/100엔</div><div class="q-en">JPY 100 → KRW</div></div><div class="q-val"><div class="px" id="px-jpykrw">--</div><div class="chg flat" id="ch-jpykrw">--</div></div></div>
+    </div>
+  </section>
+
+  <section class="col">
+    <div class="charts">
+      <div class="chart"><div class="ch-head"><span class="ch-title">원/달러</span><span class="ch-sub">최근 180일</span><span class="ch-stats" id="st-usdkrw"></span></div><div class="ch-box" id="cb-usdkrw"></div></div>
+      <div class="chart"><div class="ch-head"><span class="ch-title">헤알/달러</span><span class="ch-sub">최근 180일</span><span class="ch-stats" id="st-usdbrl"></span></div><div class="ch-box" id="cb-usdbrl"></div></div>
+    </div>
+  </section>
+</div></div>
+<div class="panel" data-v="grains"><div class="pgrid">
+  <section class="col">
+    <div class="col-head"><span class="col-title">곡물 시세</span><span class="col-meta" id="gr-src">불러오는 중</span></div>
+    <div class="q-list grains">
+      <div class="q-row"><div class="gt zc">ZC</div><div><div class="q-kr">옥수수</div><div class="q-en">CBOT Corn</div><div class="asof" id="as-corn"></div></div><div class="q-val"><div class="px" id="px-corn">--</div><div class="native"><span id="nv-corn">--</span><span class="chg flat" id="ch-corn">--</span></div></div></div>
+      <div class="q-row"><div class="gt zs">ZS</div><div><div class="q-kr">대두</div><div class="q-en">CBOT Soybeans</div><div class="asof" id="as-soy"></div></div><div class="q-val"><div class="px" id="px-soy">--</div><div class="native"><span id="nv-soy">--</span><span class="chg flat" id="ch-soy">--</span></div></div></div>
+      <div class="q-row"><div class="gt sb">SB</div><div><div class="q-kr">설탕</div><div class="q-en">ICE Sugar No.11</div><div class="asof" id="as-sugar"></div></div><div class="q-val"><div class="px" id="px-sugar">--</div><div class="native"><span id="nv-sugar">--</span><span class="chg flat" id="ch-sugar">--</span></div></div></div>
+      <div class="q-row"><div class="gt zw">ZW</div><div><div class="q-kr">밀</div><div class="q-en">CBOT Wheat</div><div class="asof" id="as-wheat"></div></div><div class="q-val"><div class="px" id="px-wheat">--</div><div class="native"><span id="nv-wheat">--</span><span class="chg flat" id="ch-wheat">--</span></div></div></div>
+      <div class="q-row"><div class="gt zr">ZR</div><div><div class="q-kr">쌀</div><div class="q-en">CBOT Rough Rice</div><div class="asof" id="as-rice"></div></div><div class="q-val"><div class="px" id="px-rice">--</div><div class="native"><span id="nv-rice">--</span><span class="chg flat" id="ch-rice">--</span></div></div></div>
+    </div>
+  </section>
+
+  <section class="col">
+    <div class="charts">
+      <div class="chart"><div class="ch-head"><span class="ch-title">옥수수</span><span class="ch-sub">최근 180일   USD/톤</span><span class="ch-stats" id="st-corn"></span></div><div class="ch-box" id="cb-corn"></div></div>
+      <div class="chart"><div class="ch-head"><span class="ch-title">대두</span><span class="ch-sub">최근 180일   USD/톤</span><span class="ch-stats" id="st-soy"></span></div><div class="ch-box" id="cb-soy"></div></div>
+    </div>
+  </section>
+</div></div>
+<div class="panel" data-v="metals"><div class="pgrid">
+  <section class="col">
+    <div class="col-head"><span class="col-title">금속 시세</span><span class="col-meta" id="mt-src">불러오는 중</span></div>
+    <div class="q-list metals">
+      <div class="q-row"><div class="el au">Au</div><div><div class="q-kr">금</div><div class="q-en" id="sr-gold">London Fixing</div></div><div class="q-val"><div class="px" id="px-gold">--</div><div class="unit">USD / 트로이온스</div><div class="asof" id="as-gold"></div><div class="chg flat" id="ch-gold">--</div></div></div>
+      <div class="q-row"><div class="el ag">Ag</div><div><div class="q-kr">은</div><div class="q-en" id="sr-silver">London Fixing</div></div><div class="q-val"><div class="px" id="px-silver">--</div><div class="unit">USD / 트로이온스</div><div class="asof" id="as-silver"></div><div class="chg flat" id="ch-silver">--</div></div></div>
+      <div class="q-row"><div class="el cu">Cu</div><div><div class="q-kr">구리</div><div class="q-en" id="sr-copper">LME Cash-Settlement</div></div><div class="q-val"><div class="px" id="px-copper">--</div><div class="unit">USD / 톤</div><div class="asof" id="as-copper"></div><div class="chg flat" id="ch-copper">--</div></div></div>
+    </div>
+  </section>
+
+  <section class="col">
+    <div class="charts">
+      <div class="chart"><div class="ch-head"><span class="ch-title">금</span><span class="ch-sub">최근 180일</span><span class="ch-stats" id="st-gold"></span></div><div class="ch-box" id="cb-gold"></div></div>
+      <div class="chart"><div class="ch-head"><span class="ch-title">은</span><span class="ch-sub" id="cs-silver">최근 180일</span><span class="ch-stats" id="st-silver"></span></div><div class="ch-box" id="cb-silver"></div></div>
+      <div class="chart"><div class="ch-head"><span class="ch-title">구리</span><span class="ch-sub">최근 180일</span><span class="ch-stats" id="st-copper"></span></div><div class="ch-box" id="cb-copper"></div></div>
+    </div>
+  </section>
+</div></div>
+<div class="panel" data-v="latam"><div class="pgrid">
+  <section class="col col-wide">
+    <div class="kf-head"><span class="col-title">국내 언론 중남미·브라질 뉴스</span><span class="col-sub" id="kn-sub"></span><span class="col-meta" id="kn-src">불러오는 중</span></div>
+    <div class="kf-prog"><i id="kf-prog"></i></div>
+    <div class="kf" id="kf"></div>
+  </section>
+
+</div></div>
+</main>
+<footer class="ifoot"><div class="pages" id="pages"></div><span id="gear">⚙</span></footer>
+<div id="setup"><div class="box">
+  <h2>ASTROS 대시보드 설정</h2>
+  <label>Apps Script 주소 (…/exec?token=… 전체)</label><input id="in-api" type="url" autocomplete="off" autocapitalize="off" spellcheck="false">
+  <label>화면 순서 (쉼표로 구분)</label><input id="in-order" type="text" autocomplete="off">
+  <div class="row"><button id="btn-save">저장</button><button id="btn-cancel">닫기</button><span id="setup-msg"></span></div>
+</div></div>
+</div></div>
+<script>
+/* ===================== CONFIG ===================== */
+const VARIANT = 'all';
+const on = v => VARIANT === v || VARIANT === 'all';
+let CUR = '';                 // schedule | fx | metals
+const CALENDAR_API_URL = '';   // iPad: 주소는 첫 실행 때 입력해 기기에만 저장        // Apps Script 웹앱 URL (?token= 포함)
+const LAT = 37.5384, LON = 127.0822;           // 서울 광진구 능동로 (사무실)
+
+const CALENDARS = [
+  { key: 'personal',   label: '개인',       color: '#4f9eff', url: '' },
+  { key: 'work1',      label: '아스트로스', color: '#10b981', url: '' },
+  { key: 'work2',      label: '양평예약',   color: '#a78bfa', url: '' },
+  { key: 'kr-holiday', label: '한국 공휴일', color: '#ff5577', flagSrc: 'resources/flags/kr.svg', url: '' },
+  { key: 'br-holiday', label: '브라질 공휴일', color: '#fbbf24', flagSrc: 'resources/flags/br.svg', url: '' }
+];
+const CAL_META = {}; CALENDARS.forEach(c => { CAL_META[c.key] = c; });
+
+/* ===================== UTIL ===================== */
+const $ = id => document.getElementById(id);
+const pad = n => String(n).padStart(2, '0');
+const DAY = 86400000;
+const esc = s => String(s == null ? '' : s).replace(/[&<>"']/g, ch => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[ch]));
+function fetchT(url, ms, opts) {
+  const ctl = new AbortController();
+  const t = setTimeout(() => ctl.abort(), ms || 9000);
+  return fetch(url, Object.assign({ cache: 'no-store', signal: ctl.signal }, opts || {})).finally(() => clearTimeout(t));
+}
+const hhmm = d => pad(d.getHours()) + ':' + pad(d.getMinutes());
+const ymd = d => d.getFullYear() + '-' + pad(d.getMonth() + 1) + '-' + pad(d.getDate());
+const fmtN = (v, dp) => v.toLocaleString('en-US', { minimumFractionDigits: dp, maximumFractionDigits: dp });
+const DOW_KR = ['일요일', '월요일', '화요일', '수요일', '목요일', '금요일', '토요일'];
+const DOW_S = ['일', '월', '화', '수', '목', '금', '토'];
+const MON_EN = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+const sod = d => new Date(d.getFullYear(), d.getMonth(), d.getDate());
+const addDays = (d, n) => new Date(d.getFullYear(), d.getMonth(), d.getDate() + n);
+const mdLabel = d => (d.getMonth() + 1) + '월 ' + d.getDate() + '일 ' + DOW_S[d.getDay()] + '요일';
+function getApiUrl() {
+  let u = '';
+  if (typeof calendarApi !== 'undefined' && calendarApi) u = String(calendarApi).trim();
+  try { const ls = localStorage.getItem('astros_api'); if (ls && /^https:\/\//.test(ls)) u = ls; } catch (e) {}
+  if (!/^https:\/\//.test(u)) u = CALENDAR_API_URL;
+  try { const q = new URLSearchParams(location.search).get('api'); if (q) u = q; } catch (e) {}
+  return /^https:\/\//.test(u) ? u : '';
+}
+function apiCall(params, ms) {
+  const api = getApiUrl();
+  if (!api) return Promise.reject(new Error('Apps Script URL 없음'));
+  return fetchT(api + (api.includes('?') ? '&' : '?') + params + '&_=' + Date.now(), ms || 30000, { redirect: 'follow' })
+    .then(r => { if (!r.ok) throw new Error('API HTTP ' + r.status); return r.json(); })
+    .then(j => { if (!j.ok) throw new Error('API ' + (j.error || 'error')); return j; });
+}
+
+/* ===================== CLOCK ===================== */
+function is24() { return (typeof use24Hour === 'undefined') ? true : !(use24Hour === false || String(use24Hour) === 'false'); }
+function isoWeek(d) {
+  const t = new Date(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()));
+  const wd = t.getUTCDay() || 7; t.setUTCDate(t.getUTCDate() + 4 - wd);
+  return Math.ceil(((t - new Date(Date.UTC(t.getUTCFullYear(), 0, 1))) / DAY + 1) / 7);
+}
+function dayOfYear(d) { return Math.round((sod(d) - new Date(d.getFullYear(), 0, 0)) / DAY); }
+let lastYmd = '';
+function tickClock() {
+  const now = new Date();
+  let h = now.getHours();
+  if (is24()) $('ampm').textContent = '';
+  else { $('ampm').textContent = h < 12 ? 'AM' : 'PM'; h = h % 12 || 12; }
+  $('hm').textContent = pad(h) + ':' + pad(now.getMinutes());
+  $('sec').textContent = ':' + pad(now.getSeconds());
+  $('date').textContent = now.getFullYear() + '년 ' + (now.getMonth() + 1) + '월 ' + now.getDate() + '일';
+  $('dow').textContent = DOW_KR[now.getDay()];
+  $('date-sub').textContent = MON_EN[now.getMonth()] + ' ' + now.getDate() + ', ' + now.getFullYear() + '   |   ' + isoWeek(now) + '주차   |   올해 ' + dayOfYear(now) + '일째';
+  const pct = (now.getHours() * 3600 + now.getMinutes() * 60 + now.getSeconds()) / 864;
+  $('dp-fill').style.width = pct.toFixed(2) + '%';
+  $('dp-pct').textContent = Math.floor(pct) + '%';
+  const today = ymd(now);
+  if (lastYmd && today !== lastYmd) refreshData();   // midnight rollover
+  lastYmd = today;
+  if (now.getSeconds() === 0 && on('schedule')) renderSchedule();
+  if (now.getSeconds() === 0 || bgCur === -1) updateBg();
+}
+
+/* ===================== WEATHER (Open-Meteo) ===================== */
+const WMO = { 0: ['맑음', '☀️', '🌙'], 1: ['대체로 맑음', '🌤️', '🌙'], 2: ['구름 조금', '⛅', '☁️'], 3: ['흐림', '☁️', '☁️'],
+  45: ['안개', '🌫️', '🌫️'], 48: ['안개', '🌫️', '🌫️'], 51: ['약한 이슬비', '🌦️', '🌧️'], 53: ['이슬비', '🌦️', '🌧️'], 55: ['이슬비', '🌧️', '🌧️'],
+  56: ['어는 이슬비', '🌧️', '🌧️'], 57: ['어는 이슬비', '🌧️', '🌧️'], 61: ['약한 비', '🌧️', '🌧️'], 63: ['비', '🌧️', '🌧️'], 65: ['강한 비', '🌧️', '🌧️'],
+  66: ['어는 비', '🌧️', '🌧️'], 67: ['어는 비', '🌧️', '🌧️'], 71: ['약한 눈', '🌨️', '🌨️'], 73: ['눈', '❄️', '❄️'], 75: ['폭설', '❄️', '❄️'], 77: ['싸락눈', '🌨️', '🌨️'],
+  80: ['소나기', '🌦️', '🌧️'], 81: ['소나기', '🌧️', '🌧️'], 82: ['강한 소나기', '⛈️', '⛈️'], 85: ['눈 소나기', '🌨️', '🌨️'], 86: ['눈 소나기', '🌨️', '🌨️'],
+  95: ['뇌우', '⛈️', '⛈️'], 96: ['뇌우와 우박', '⛈️', '⛈️'], 99: ['뇌우와 우박', '⛈️', '⛈️'] };
+async function refreshWeather() {
+  try {
+    const url = 'https://api.open-meteo.com/v1/forecast?latitude=' + LAT + '&longitude=' + LON +
+      '&current=temperature_2m,apparent_temperature,relative_humidity_2m,weather_code,is_day,wind_speed_10m' +
+      '&daily=temperature_2m_max,temperature_2m_min,precipitation_probability_max&timezone=Asia%2FSeoul&forecast_days=1&wind_speed_unit=ms';
+    const r = await fetchT(url, 9000);
+    if (!r.ok) throw new Error('HTTP ' + r.status);
+    const j = await r.json(), c = j.current, d = j.daily;
+    const w = WMO[c.weather_code] || ['날씨', '🌡️', '🌡️'];
+    $('wx-icon').textContent = c.is_day ? w[1] : w[2];
+    $('wx-temp').textContent = Math.round(c.temperature_2m) + '°';
+    $('wx-desc').textContent = w[0];
+    $('wx-sub').textContent = '체감 ' + Math.round(c.apparent_temperature) + '°    습도 ' + Math.round(c.relative_humidity_2m) + '%    바람 ' + (+c.wind_speed_10m).toFixed(1) + 'm/s';
+    $('wx-hl').innerHTML = '<span class="hi">' + Math.round(d.temperature_2m_max[0]) + '°</span> / <span class="lo">' + Math.round(d.temperature_2m_min[0]) + '°</span>';
+    const pp = d.precipitation_probability_max && d.precipitation_probability_max[0];
+    $('wx-rain').textContent = '강수확률 ' + (pp == null ? 0 : pp) + '%';
+  } catch (e) {
+    console.warn('weather failed:', e.message);
+    $('wx-desc').textContent = '날씨 서버 연결 실패, 다음 갱신 때 재시도';
+  }
+}
+
+/* ===================== 배경 일러스트 (시간대별 2장, 1시간마다 교대) ===================== */
+let BG_FILES = [];   // [아침1, 아침2, 오후1, 오후2, 저녁1, 저녁2, 밤1, 밤2]
+let bgCur = -1, bgFront = 'a';
+function bgIndex(d) {
+  const h = d.getHours(), slot = h >= 6 && h < 12 ? 0 : h >= 12 && h < 17 ? 1 : h >= 17 && h < 20 ? 2 : 3;
+  return slot * 2 + (h % 2);
+}
+function applyBgStrength() {
+  const v = (typeof bgStrength !== 'undefined' && bgStrength !== '' && isFinite(Number(bgStrength))) ? Number(bgStrength) : 24;
+  $('app').style.setProperty('--bgop', Math.max(0, Math.min(60, v)) / 100);
+}
+function updateBg() {
+  if (!BG_FILES.length) return;
+  const i = bgIndex(new Date());
+  if (i === bgCur) return;
+  const next = bgFront === 'a' ? 'b' : 'a', img = $('bg-' + next), old = $('bg-' + bgFront);
+  img.onload = () => { img.classList.add('on'); if (bgCur !== -1 || old.src) old.classList.remove('on'); bgFront = next; };
+  img.src = BG_FILES[i]; bgCur = i;
+}
+
+/* ===================== 위젯 순서 표시 ===================== */
+const VARIANT_LABEL = { schedule: '일정', kbo: '야구', flights: '항공', futebol: '축구', news: '뉴스', fx: '환율', grains: '곡물', metals: '금속', latam: '중남미' };
+function renderPages() {
+  let order = '일정,야구,항공,축구,뉴스,환율,곡물,금속,중남미';
+  if (typeof pageOrder !== 'undefined' && pageOrder && !/^tr\(/.test(String(pageOrder))) order = String(pageOrder);
+  const me = VARIANT_LABEL[VARIANT];
+  $('pages').innerHTML = order.split(/[,，\s]+/).filter(Boolean).map(n => '<span' + (n === me ? ' class="cur"' : '') + '>' + esc(n) + '</span>').join('');
+}
+
+/* ===================== CHART (SVG) ===================== */
+let chartSeq = 0;
+const chartCache = {};
+function drawChart(id, pts, color, dp) {
+  chartCache[id] = { pts, color, dp };
+  const box = $('cb-' + id); if (!box) return;
+  const W = box.clientWidth, H = box.clientHeight;
+  if (!pts || pts.length < 2) { box.innerHTML = '<div class="chart-empty">추이 데이터를 불러오지 못했습니다</div>'; return; }
+  if (!W || !H) return;
+  const padR = 96, padT = 10, padB = 26, iw = W - padR, ih = H - padT - padB;
+  const vs = pts.map(p => p.v);
+  let lo = Math.min.apply(null, vs), hi = Math.max.apply(null, vs);
+  const sp = (hi - lo) || Math.abs(hi) * 0.01 || 1, y0 = lo - sp * 0.08, y1 = hi + sp * 0.08;
+  const t0 = pts[0].t, t1 = pts[pts.length - 1].t;
+  const X = t => (t - t0) / ((t1 - t0) || 1) * iw, Y = v => padT + (1 - (v - y0) / (y1 - y0)) * ih;
+  let line = '', spotLine = '';
+  const k = pts.findIndex(p => !p.s);                       // 현물(참고) 구간은 맨 앞에만 존재
+  const solid = k < 0 ? [] : pts.slice(k), dashed = k < 0 ? pts : (k > 0 ? pts.slice(0, k + 1) : []);
+  solid.forEach((p, i) => { line += (i ? 'L' : 'M') + X(p.t).toFixed(1) + ',' + Y(p.v).toFixed(1); });
+  dashed.forEach((p, i) => { spotLine += (i ? 'L' : 'M') + X(p.t).toFixed(1) + ',' + Y(p.v).toFixed(1); });
+  let full = '';
+  pts.forEach((p, i) => { full += (i ? 'L' : 'M') + X(p.t).toFixed(1) + ',' + Y(p.v).toFixed(1); });
+  const area = full + 'L' + iw.toFixed(1) + ',' + (padT + ih) + 'L0,' + (padT + ih) + 'Z';
+  const gid = 'cg' + (++chartSeq);
+  let g = '';
+  for (let k = 0; k <= 3; k++) {
+    const v = y0 + (y1 - y0) * k / 3, yy = Y(v);
+    g += '<line class="gl" x1="0" x2="' + iw.toFixed(1) + '" y1="' + yy.toFixed(1) + '" y2="' + yy.toFixed(1) + '"/>' +
+         '<text class="yl" x="' + (iw + 14) + '" y="' + (yy + 5).toFixed(1) + '">' + fmtN(v, dp) + '</text>';
+  }
+  const d = new Date(t0); d.setDate(1); d.setHours(0, 0, 0, 0); d.setMonth(d.getMonth() + 1);
+  for (; d.getTime() <= t1; d.setMonth(d.getMonth() + 1)) {
+    const xx = X(d.getTime());
+    if (xx < 24 || xx > iw - 24) continue;
+    g += '<line class="gl" x1="' + xx.toFixed(1) + '" x2="' + xx.toFixed(1) + '" y1="' + padT + '" y2="' + (padT + ih) + '"/>' +
+         '<text class="xl" x="' + xx.toFixed(1) + '" y="' + (H - 5) + '">' + (d.getMonth() + 1) + '월</text>';
+  }
+  const lx = X(t1), ly = Y(pts[pts.length - 1].v);
+  box.innerHTML = '<svg width="' + W + '" height="' + H + '" viewBox="0 0 ' + W + ' ' + H + '"><defs><linearGradient id="' + gid + '" x1="0" y1="0" x2="0" y2="1">' +
+    '<stop offset="0" stop-color="' + color + '" stop-opacity=".30"/><stop offset="1" stop-color="' + color + '" stop-opacity="0"/></linearGradient></defs>' + g +
+    '<path d="' + area + '" fill="url(#' + gid + ')"/>' + (spotLine ? '<path d="' + spotLine + '" fill="none" stroke="' + color + '" stroke-width="2" stroke-dasharray="5 5" opacity=".55"/>' : '') +
+    (line ? '<path d="' + line + '" fill="none" stroke="' + color + '" stroke-width="2.5" stroke-linejoin="round"/>' : '') +
+    '<circle cx="' + lx.toFixed(1) + '" cy="' + ly.toFixed(1) + '" r="11" fill="' + color + '" opacity=".22"/><circle cx="' + lx.toFixed(1) + '" cy="' + ly.toFixed(1) + '" r="5" fill="' + color + '"/></svg>';
+}
+function chartStats(id, pts, dp) {
+  const el = $('st-' + id); if (!el || !pts || pts.length < 2) return;
+  const vs = pts.map(p => p.v), first = vs[0], last = vs[vs.length - 1], pct = (last - first) / first * 100;
+  el.innerHTML = '최고 ' + fmtN(Math.max.apply(null, vs), dp) + '    최저 ' + fmtN(Math.min.apply(null, vs), dp) +
+    '    <span class="' + (pct >= 0 ? 'up' : 'dn') + '">' + (pct >= 0 ? '+' : '') + pct.toFixed(2) + '%</span>';
+}
+window.addEventListener('resize', () => { Object.keys(chartCache).forEach(id => { const c = chartCache[id]; drawChart(id, c.pts, c.color, c.dp); }); });
+function setChg(el, v, pv, dp) {
+  if (pv && isFinite(pv) && isFinite(v)) {
+    const diff = v - pv, pct = diff / pv * 100;
+    const cls = Math.abs(pct) < 0.005 ? 'flat' : (diff > 0 ? 'up' : 'dn');
+    el.className = 'chg ' + cls;
+    el.textContent = (cls === 'up' ? '▲ ' : cls === 'dn' ? '▼ ' : '– ') + fmtN(Math.abs(diff), dp) + '  (' + (pct >= 0 ? '+' : '') + pct.toFixed(2) + '%)';
+  } else { el.className = 'chg flat'; el.textContent = '전일 대비 없음'; }
+}
+// --- iCal parsing ---
+function parseDate(v) {
+  v = (v || '').trim();
+  let m = v.match(/^(\d{4})(\d{2})(\d{2})$/);
+  if (m) return new Date(+m[1], +m[2] - 1, +m[3]);
+  m = v.match(/^(\d{4})(\d{2})(\d{2})T(\d{2})(\d{2})(\d{2})(Z?)$/);
+  if (!m) return null;
+  return m[7] ? new Date(Date.UTC(+m[1], +m[2] - 1, +m[3], +m[4], +m[5], +m[6])) : new Date(+m[1], +m[2] - 1, +m[3], +m[4], +m[5], +m[6]);
+}
+const unesc = s => s.replace(/\\n/gi, ' ').replace(/\\,/g, ',').replace(/\\;/g, ';').replace(/\\\\/g, '\\');
+function parseICal(text) {
+  const lines = text.replace(/\r?\n[ \t]/g, '').split(/\r?\n/);
+  const evs = []; let cur = null;
+  for (const line of lines) {
+    if (line === 'BEGIN:VEVENT') { cur = {}; continue; }
+    if (line === 'END:VEVENT') { if (cur) evs.push(cur); cur = null; continue; }
+    if (!cur) continue;
+    const ci = line.indexOf(':'); if (ci < 0) continue;
+    const key = line.slice(0, ci), val = line.slice(ci + 1), name = key.split(';')[0];
+    switch (name) {
+      case 'SUMMARY': cur.summary = unesc(val); break;
+      case 'LOCATION': cur.location = unesc(val); break;
+      case 'UID': cur.uid = val.trim(); break;
+      case 'STATUS': cur.status = val.trim(); break;
+      case 'RRULE': cur.rrule = val.trim(); break;
+      case 'DTSTART': cur.start = parseDate(val); cur.allDay = /VALUE=DATE(?!-)/.test(key) || /^\d{8}$/.test(val.trim()); break;
+      case 'DTEND': cur.end = parseDate(val); break;
+      case 'EXDATE': cur.exdates = (cur.exdates || []).concat(val.split(',').map(parseDate).filter(Boolean)); break;
+      case 'RECURRENCE-ID': cur.recurId = parseDate(val); break;
+    }
+  }
+  return evs;
+}
+function overlaps(e, from, to) {
+  const end = e.end || e.start;
+  return e.start < to && (end > from || (end.getTime() === e.start.getTime() && e.start >= from));
+}
+const WD = { SU: 0, MO: 1, TU: 2, WE: 3, TH: 4, FR: 5, SA: 6 };
+function expandRecurring(ev, from, to) {
+  const rule = {};
+  ev.rrule.split(';').forEach(p => { const i = p.indexOf('='); if (i > 0) rule[p.slice(0, i)] = p.slice(i + 1); });
+  const s0 = ev.start, dur = ev.end ? ev.end - s0 : (ev.allDay ? DAY : 0);
+  const interval = Math.max(1, parseInt(rule.INTERVAL || '1', 10));
+  const until = rule.UNTIL ? parseDate(rule.UNTIL) : null;
+  const hasCount = !!rule.COUNT, maxCount = hasCount ? parseInt(rule.COUNT, 10) : Infinity;
+  const ex = (ev.exdates || []).map(d => d.getTime());
+  const H = s0.getHours(), Mi = s0.getMinutes(), S = s0.getSeconds();
+  const out = []; let count = 0;
+  const visit = st => {
+    if (st >= to) return false;
+    if (until && st > until) return false;
+    if (++count > maxCount) return false;
+    if (ex.some(t => Math.abs(t - st.getTime()) < 60000)) return true;
+    const c = Object.assign({}, ev, { start: st, end: new Date(st.getTime() + dur) });
+    if (overlaps(c, from, to)) out.push(c);
+    return true;
+  };
+  const monthsBetween = (a, b) => (b.getFullYear() - a.getFullYear()) * 12 + b.getMonth() - a.getMonth();
+  if (rule.FREQ === 'DAILY') {
+    let i = hasCount ? 0 : Math.max(0, Math.floor((from - s0) / DAY / interval) - 1) * interval;
+    for (let n = 0; n < 10000; n++, i += interval) {
+      if (!visit(new Date(s0.getFullYear(), s0.getMonth(), s0.getDate() + i, H, Mi, S))) break;
+    }
+  } else if (rule.FREQ === 'WEEKLY') {
+    let days = rule.BYDAY ? rule.BYDAY.split(',').map(s => WD[s.trim().slice(-2)]).filter(x => x !== undefined) : [];
+    if (!days.length) days = [s0.getDay()];
+    days.sort((a, b) => a - b);
+    const wk0 = new Date(s0.getFullYear(), s0.getMonth(), s0.getDate() - s0.getDay());
+    let w = hasCount ? 0 : Math.max(0, Math.floor((from - wk0) / (7 * DAY) / interval) - 1) * interval;
+    outer: for (let n = 0; n < 5000; n++, w += interval) {
+      for (const dw of days) {
+        const st = new Date(wk0.getFullYear(), wk0.getMonth(), wk0.getDate() + w * 7 + dw, H, Mi, S);
+        if (st < s0) continue;
+        if (!visit(st)) break outer;
+      }
+    }
+  } else if (rule.FREQ === 'MONTHLY') {
+    let i = hasCount ? 0 : Math.max(0, monthsBetween(s0, from) - 1); i -= i % interval;
+    const bd = rule.BYDAY ? rule.BYDAY.match(/^([+-]?\d)?(SU|MO|TU|WE|TH|FR|SA)$/) : null;
+    if (rule.BYDAY && !bd) return overlaps(ev, from, to) ? [ev] : [];
+    for (let n = 0; n < 3000; n++, i += interval) {
+      const y = s0.getFullYear(), mo = s0.getMonth() + i;
+      let st;
+      if (bd) {
+        const nth = parseInt(bd[1] || '1', 10), dw = WD[bd[2]];
+        if (nth > 0) { const first = new Date(y, mo, 1); st = new Date(y, mo, 1 + (dw - first.getDay() + 7) % 7 + (nth - 1) * 7, H, Mi, S); }
+        else { const last = new Date(y, mo + 1, 0); st = new Date(y, mo + 1, 0 - (last.getDay() - dw + 7) % 7 + (nth + 1) * 7, H, Mi, S); }
+        if (st.getMonth() !== new Date(y, mo, 1).getMonth()) continue;
+      } else {
+        st = new Date(y, mo, s0.getDate(), H, Mi, S);
+        if (st.getDate() !== s0.getDate()) continue;
+      }
+      if (st < s0) continue;
+      if (!visit(st)) break;
+    }
+  } else if (rule.FREQ === 'YEARLY') {
+    let i = hasCount ? 0 : Math.max(0, from.getFullYear() - s0.getFullYear() - 1); i -= i % interval;
+    for (let n = 0; n < 500; n++, i += interval) {
+      const st = new Date(s0.getFullYear() + i, s0.getMonth(), s0.getDate(), H, Mi, S);
+      if (st.getDate() !== s0.getDate()) continue;
+      if (!visit(st)) break;
+    }
+  } else {
+    return overlaps(ev, from, to) ? [ev] : [];
+  }
+  return out;
+}
+function eventsFromIcal(text, meta, from, to) {
+  const raw = parseICal(text);
+  const overrides = {};
+  raw.forEach(e => { if (e.recurId && e.uid) (overrides[e.uid] = overrides[e.uid] || []).push(e.recurId); });
+  const out = [];
+  raw.forEach(e => {
+    if (!e.start || e.status === 'CANCELLED') return;
+    if (e.allDay && !e.end) e.end = new Date(e.start.getTime() + DAY);
+    if (!e.end) e.end = e.start;
+    if (e.rrule && !e.recurId) {
+      e.exdates = (e.exdates || []).concat(overrides[e.uid] || []);
+      expandRecurring(e, from, to).forEach(x => out.push(x));
+    } else if (overlaps(e, from, to)) out.push(e);
+  });
+  out.forEach(e => { e._meta = meta; });
+  return out;
+}
+const ymdLocal = s => { const p = String(s).split('-').map(Number); return new Date(p[0], p[1] - 1, p[2]); };
+const SPAN_DAYS = 8;
+async function calViaApi(from, to) {
+  const j = await apiCall('days=' + SPAN_DAYS, 30000);
+  const out = [];
+  (j.events || []).forEach(e => {
+    const m = CAL_META[e.cal] || { label: e.cal, color: '#94a3b8' };
+    const ev = { summary: e.title, location: e.location, allDay: !!e.allDay,
+      start: e.allDay ? ymdLocal(e.start) : new Date(e.start), end: e.allDay ? ymdLocal(e.end) : new Date(e.end), _meta: m };
+    if (overlaps(ev, from, to)) out.push(ev);
+  });
+  Object.keys(j.icals || {}).forEach(k => { if (CAL_META[k]) out.push(...eventsFromIcal(j.icals[k], CAL_META[k], from, to)); });
+  return { events: out, failed: Object.keys(j.sources || {}).filter(k => j.sources[k] === 'failed'), src: 'Google 연동' };
+}
+const PROXIES = [
+  { name: 'direct', wrap: u => u },
+  { name: 'allorigins', wrap: u => 'https://api.allorigins.win/get?url=' + encodeURIComponent(u), json: true },
+  { name: 'codetabs', wrap: u => 'https://api.codetabs.com/v1/proxy/?quest=' + encodeURIComponent(u) },
+  { name: 'corsproxy', wrap: u => 'https://corsproxy.io/?url=' + encodeURIComponent(u) }
+];
+let goodProxy = null;
+async function fetchICal(url) {
+  const order = PROXIES.map((_, i) => i);
+  if (goodProxy !== null) { order.splice(order.indexOf(goodProxy), 1); order.unshift(goodProxy); }
+  for (const i of order) {
+    const p = PROXIES[i];
+    try {
+      const r = await fetchT(p.wrap(url), 9000);
+      if (!r.ok) throw new Error('HTTP ' + r.status);
+      const text = p.json ? ((await r.json()).contents || '') : await r.text();
+      if (text.indexOf('BEGIN:VCALENDAR') < 0) throw new Error('not iCal');
+      goodProxy = i; return text;
+    } catch (e) { console.warn('iCal via ' + p.name + ' failed:', e.message); }
+  }
+  throw new Error('all proxies failed');
+}
+async function calViaProxy(from, to) {
+  const res = await Promise.allSettled(CALENDARS.map(async c => eventsFromIcal(await fetchICal(c.url), c, from, to)));
+  const out = [], failed = [];
+  res.forEach((r, i) => { if (r.status === 'fulfilled') out.push(...r.value); else failed.push(CALENDARS[i].key); });
+  if (failed.length === CALENDARS.length) throw new Error('캘린더 연결 실패');
+  return { events: out, failed, src: '공개 프록시' };
+}
+
+let cal = { events: null, failed: [], src: '', error: null, at: null };
+async function refreshCalendar() {
+  const from = sod(new Date()), to = addDays(from, SPAN_DAYS);
+  try {
+    let res;
+    if (getApiUrl()) {
+      try { res = await calViaApi(from, to); }
+      catch (e) { console.warn('API failed, falling back:', e.message); res = await calViaProxy(from, to); res.src += ' (Apps Script 오류)'; }
+    } else res = await calViaProxy(from, to);
+    const seen = new Set();
+    res.events = res.events.filter(e => { const k = (e.summary || '') + '|' + e.start.getTime() + '|' + e.end.getTime(); if (seen.has(k)) return false; seen.add(k); return true; });
+    cal = { events: res.events, failed: res.failed, src: res.src, error: null, at: new Date() };
+  } catch (e) { cal.error = e.message; }
+  renderSchedule();
+}
+// 표시 순서: 아스트로스 → 양평예약 → 개인 → 공휴일. 아스트로스 안에서는 JJ·YS(박종진·신유진) 일정을 맨 위로
+const CAL_ORDER = { work1: 0, work2: 1, personal: 2, 'kr-holiday': 3, 'br-holiday': 4 };
+const MY_INITIALS = /(^|[^A-Za-z])(JJ|YS)(?=[^A-Za-z]|$)/;
+const isMine = e => e._meta && e._meta.key === 'work1' && MY_INITIALS.test(e.summary || '');
+const byTime = (a, b) => (a.allDay === b.allDay) ? a.start - b.start : (a.allDay ? -1 : 1);
+const sortEv = (a, b) => {
+  const ca = CAL_ORDER[a._meta && a._meta.key], cb = CAL_ORDER[b._meta && b._meta.key];
+  if (ca !== cb) return (ca == null ? 9 : ca) - (cb == null ? 9 : cb);
+  if (isMine(a) !== isMine(b)) return isMine(a) ? -1 : 1;
+  return byTime(a, b);
+};
+const onDay = d => (cal.events || []).filter(e => overlaps(e, d, addDays(d, 1))).sort(sortEv);
+function badge(m) {
+  const st = 'border-color:' + m.color + '66;background:' + m.color + '1f;color:' + m.color;
+  return m.flagSrc ? '<span class="badge flag" style="' + st + '"><img src="' + m.flagSrc + '" alt="' + esc(m.label) + '"></span>'
+                   : '<span class="badge" style="' + st + '">' + esc(m.label) + '</span>';
+}
+const lastDay = e => e.allDay ? new Date(e.end.getTime() - DAY) : e.end;
+const multiDay = e => sod(lastDay(e)) > sod(e.start);
+const md = d => (d.getMonth() + 1) + '.' + d.getDate();
+
+function evRow(e, isToday, now) {
+  const m = e._meta, isNow = isToday && !e.allDay && e.start <= now && e.end > now, isPast = isToday && !e.allDay && e.end <= now;
+  let time;
+  if (e.allDay) time = '<div class="t-all">종일</div>' + (multiDay(e) ? '<div class="t-end">~ ' + md(lastDay(e)) + '</div>' : '');
+  else time = '<div class="t-start">' + hhmm(e.start) + '</div><div class="t-end">~ ' + (multiDay(e) ? md(e.end) + ' ' : '') + hhmm(e.end) + '</div>';
+  return '<div class="ev' + (isNow ? ' now' : '') + (isPast ? ' past' : '') + '"><div>' + time + '</div><div class="bar" style="background:' + m.color + '"></div>' +
+    '<div class="info"><div class="row1">' + badge(m) + '<span class="name">' + esc(e.summary || '(제목 없음)') + '</span>' + (isNow ? '<span class="now-tag">진행 중</span>' : '') +
+    '</div>' + (e.location ? '<div class="loc">' + esc(e.location) + '</div>' : '') + '</div></div>';
+}
+// Render as many items as fit; items = [{html, ev:boolean}]
+function fit(box, items, emptyHtml) {
+  if (!items.some(i => i.ev)) { box.innerHTML = emptyHtml; return; }
+  const total = items.filter(i => i.ev).length;
+  const draw = k => {
+    let shown = items.slice(0, k);
+    while (shown.length && !shown[shown.length - 1].ev && !shown[shown.length - 1].keep) shown.pop();
+    const left = total - shown.filter(i => i.ev).length;
+    box.innerHTML = shown.map(i => i.html).join('') + (left > 0 ? '<div class="more">외 ' + left + '건 더 있음</div>' : '');
+  };
+  let k = items.length; draw(k);
+  while (k > 1 && box.scrollHeight > box.clientHeight + 1) { k--; draw(k); }
+}
+const dur = ms => { const m = Math.max(1, Math.round(ms / 60000)), h = Math.floor(m / 60); return h ? h + '시간 ' + (m % 60) + '분' : m + '분'; };
+
+function renderSchedule() {
+  if (!on('schedule')) return;
+  const now = new Date(), d0 = sod(now), d1 = addDays(d0, 1);
+  $('d0-label').textContent = mdLabel(d0);
+  $('d1-label').textContent = mdLabel(d1);
+  $('wk-range').textContent = md(d0) + ' ~ ' + md(addDays(d0, 6));
+  if (!cal.events) {
+    if (cal.error) {
+      const msg = '<div class="empty-note err">캘린더에 연결하지 못했습니다. Apps Script URL을 확인해주세요.</div>';
+      $('list-today').innerHTML = msg; $('list-tomorrow').innerHTML = ''; $('list-week').innerHTML = '';
+      $('cal-src').textContent = cal.error; $('cal-src').className = 'err';
+    }
+    return;
+  }
+  const t = onDay(d0), tm = onDay(d1);
+  fit($('list-today'), t.map(e => ({ html: evRow(e, true, now), ev: true })), '<div class="empty-note">오늘은 예정된 일정이 없습니다</div>');
+  fit($('list-tomorrow'), tm.map(e => ({ html: evRow(e, false, now), ev: true })), '<div class="empty-note">내일은 예정된 일정이 없습니다</div>');
+  $('d1-count').textContent = tm.length ? tm.length + '건' : '';
+  const timed = t.filter(e => !e.allDay).sort(byTime), cur = timed.find(e => e.start <= now && e.end > now), nxt = timed.find(e => e.start > now);
+  $('next-line').textContent = cur ? '진행 중, ' + dur(cur.end - now) + ' 남음' : nxt ? '다음 ' + hhmm(nxt.start) + ', ' + dur(nxt.start - now) + ' 후' : (timed.length ? '오늘 남은 일정 없음' : '');
+
+  // 7 days from today; multi-day events listed once on their first visible day
+  const items = []; let count = 0;
+  for (let i = 0; i < 7; i++) {
+    const d = addDays(d0, i), de = addDays(d, 1);
+    const evs = (cal.events || []).filter(e => overlaps(e, d, de) && (i === 0 ? true : sod(e.start) >= d)).sort(sortEv);
+    const rel = i === 0 ? '오늘' : i === 1 ? '내일' : '';
+    const cls = 'wk-head' + (d.getDay() === 0 ? ' sun' : d.getDay() === 6 ? ' sat' : '') + (evs.length ? '' : ' empty');
+    items.push({ html: '<div class="' + cls + '"><span class="wd">' + mdLabel(d) + '</span>' + (rel ? '<span class="rel">' + rel + '</span>' : '') + (evs.length ? '' : '<span class="none">일정 없음</span>') + '</div>', ev: false, keep: !evs.length });
+    evs.forEach(e => {
+      count++;
+      const past = i === 0 && !e.allDay && e.end <= now;
+      items.push({ ev: true, html: '<div class="wk-ev' + (past ? ' past' : '') + '"><span class="t">' + (e.allDay ? '종일' : hhmm(e.start)) + '</span>' + badge(e._meta) +
+        '<span class="name">' + esc(e.summary || '(제목 없음)') + '</span>' + (multiDay(e) ? '<span class="rng">~ ' + md(lastDay(e)) + '</span>' : '') + '</div>' });
+    });
+  }
+  $('wk-count').textContent = count ? count + '건' : '';
+  fit($('list-week'), items, '<div class="empty-note">앞으로 7일간 예정된 일정이 없습니다</div>');
+  let s = cal.src + ' ' + hhmm(cal.at);
+  if (cal.failed.length) s += '   연결 실패: ' + cal.failed.map(k => (CAL_META[k] || {}).label || k).join(', ');
+  if (cal.error) s += '   갱신 실패, 이전 데이터 표시 중';
+  $('cal-src').textContent = s; $('cal-src').className = (cal.failed.length || cal.error) ? 'err' : '';
+}
+const FX_PAIRS = [
+  { id: 'usdkrw', dp: 2, calc: r => r.KRW },
+  { id: 'usdbrl', dp: 4, calc: r => r.BRL },
+  { id: 'brlkrw', dp: 2, calc: r => r.KRW / r.BRL },
+  { id: 'eurkrw', dp: 2, calc: r => r.KRW / r.EUR },
+  { id: 'jpykrw', dp: 2, calc: r => r.KRW / r.JPY * 100 }
+];
+async function fxSeries(host) {
+  const r = await fetchT(host + '/' + ymd(new Date(Date.now() - 186 * DAY)) + '..?base=USD&symbols=KRW,BRL,EUR,JPY', 12000);
+  if (!r.ok) throw new Error('HTTP ' + r.status);
+  const j = await r.json(), dates = Object.keys(j.rates || {}).sort();
+  if (dates.length < 2) throw new Error('no rates');
+  return { dates, rates: j.rates, src: 'ECB 기준환율' };
+}
+async function fxLatestOnly() {
+  const r = await fetchT('https://open.er-api.com/v6/latest/USD', 9000);
+  const j = await r.json(); if (j.result !== 'success') throw new Error('er-api');
+  const d = ymd(new Date(j.time_last_update_unix * 1000)); const rates = {}; rates[d] = j.rates;
+  return { dates: [d], rates, src: 'ER-API' };
+}
+async function refreshFx() {
+  let data = null;
+  for (const f of [() => fxSeries('https://api.frankfurter.dev/v1'), () => fxSeries('https://api.frankfurter.app'), fxLatestOnly]) {
+    try { data = await f(); break; } catch (e) { console.warn('FX source failed:', e.message); }
+  }
+  if (!data) { $('fx-src').textContent = '환율 서버 연결 실패, 다음 갱신 때 재시도'; $('fx-src').className = 'col-meta err'; return; }
+  const n = data.dates.length, cur = data.rates[data.dates[n - 1]], prev = n > 1 ? data.rates[data.dates[n - 2]] : null;
+  FX_PAIRS.forEach(p => {
+    const v = p.calc(cur); if (!isFinite(v)) return;
+    $('px-' + p.id).textContent = fmtN(v, p.dp);
+    setChg($('ch-' + p.id), v, prev ? p.calc(prev) : null, p.dp);
+  });
+  $('fx-src').textContent = data.src + ' ' + data.dates[n - 1]; $('fx-src').className = 'col-meta';
+  const cut = ymd(new Date(Date.now() - 180 * DAY));
+  const series = calc => data.dates.filter(d => d >= cut).map(d => ({ t: ymdLocal(d).getTime(), v: calc(data.rates[d]) }));
+  const k = series(r => r.KRW), b = series(r => r.BRL);
+  drawChart('usdkrw', k, getComputedStyle($('app')).getPropertyValue('--a1').trim() || '#2dd4bf', 0); chartStats('usdkrw', k, 2);
+  drawChart('usdbrl', b, getComputedStyle($('app')).getPropertyValue('--a3').trim() || '#fb7185', 2); chartStats('usdbrl', b, 4);
+}
+/* Metals: Apps Script(mode=metals)가 저장해둔 LBMA·LME 값만 읽음. 위젯은 원본 사이트에 직접 접속하지 않음 */
+const METALS = [
+  { id: 'gold',   dp: 2, chartDp: 0, color: '#e9c46a' },
+  { id: 'silver', dp: 3, chartDp: 1, color: '#cbd5e1' },
+  { id: 'copper', dp: 2, chartDp: 0, color: '#e08a55' }
+];
+const mdKr = s => { const p = String(s).split('-'); return (+p[1]) + '월 ' + (+p[2]) + '일'; };
+async function refreshMetals() {
+  let j;
+  try { j = await apiCall('mode=metals', 60000); }
+  catch (e) { $('mt-src').textContent = '시세 서버 연결 실패, 다음 갱신 때 재시도'; $('mt-src').className = 'col-meta err'; return; }
+  const errMap = j.errorMap || {};
+  METALS.forEach(m => {
+    const d = (j.metals || {})[m.id], asEl = $('as-' + m.id);
+    if (!d) {
+      asEl.textContent = '아직 수집된 값 없음'; asEl.className = 'asof stale';
+      drawChart(m.id, null, m.color, m.chartDp); return;
+    }
+    $('px-' + m.id).textContent = fmtN(d.price, m.dp);
+    const failed = errMap[m.id] && !errMap[m.id].partial;
+    asEl.textContent = mdKr(d.date) + ' 기준' + (failed ? ', 최근 수집 실패' : '');
+    asEl.className = 'asof' + (failed ? ' stale' : '');
+    $('sr-' + m.id).textContent = (d.source || '').replace(/\s*\((westmetall|metals\.dev)\)/, '') + (d.session ? ' ' + d.session : '');
+    setChg($('ch-' + m.id), d.price, d.prev, m.dp);
+    const h = (d.history || []).map(p => ({ t: ymdLocal(p[0]).getTime(), v: p[1], s: p[2] === 's' }));
+    const sub = $('cs-' + m.id); if (sub) sub.textContent = h.some(p => p.s) ? '최근 180일   점선은 현물 참고치' : '최근 180일';
+    drawChart(m.id, h, m.color, m.chartDp); chartStats(m.id, h, m.dp);
+  });
+  const run = j.lastRun ? new Date(j.lastRun) : null;
+  const el = $('mt-src');
+  el.textContent = (run ? (run.getMonth() + 1) + '월 ' + run.getDate() + '일 ' + hhmm(run) + ' 수집' : '') + ((j.errors || []).length ? '   일부 소스 실패' : '');
+  el.className = 'col-meta' + ((j.errors || []).length ? ' err' : '');
+  if ((j.errors || []).length) console.warn('metals errors:', j.errors);
+}
+/* Grains: Apps Script(mode=grains)가 저장한 CBOT·ICE 선물값. 큰 글씨 USD/톤, 작은 글씨 거래소 단위 */
+const GRAIN_DEF = [
+  { id: 'corn',  toT: v => v / 100 * 39.3679, nat: '¢/부셸',  ndp: 2, color: '#f4c430' },
+  { id: 'soy',   toT: v => v / 100 * 36.7437, nat: '¢/부셸',  ndp: 2, color: '#a3e635' },
+  { id: 'sugar', toT: v => v / 100 * 2204.62, nat: '¢/파운드', ndp: 2, color: '#f1e7ea' },
+  { id: 'wheat', toT: v => v / 100 * 36.7437, nat: '¢/부셸',  ndp: 2, color: '#e0a84a' },
+  { id: 'rice',  toT: v => v * 22.0462,       nat: '$/cwt',   ndp: 2, color: '#e9e4d4' }
+];
+async function refreshGrains() {
+  let j;
+  try { j = await apiCall('mode=grains', 60000); }
+  catch (e) { $('gr-src').textContent = '시세 서버 연결 실패, 다음 갱신 때 재시도'; $('gr-src').className = 'col-meta err'; return; }
+  const errMap = j.errorMap || {};
+  GRAIN_DEF.forEach(g => {
+    const d = (j.grains || {})[g.id], as = $('as-' + g.id);
+    if (!d) { as.textContent = '아직 수집된 값 없음'; as.className = 'asof stale'; return; }
+    const failed = errMap[g.id] && !errMap[g.id].partial;
+    $('px-' + g.id).innerHTML = fmtN(g.toT(d.price), 1) + '<small>USD/톤</small>';
+    $('nv-' + g.id).textContent = fmtN(d.price, g.ndp) + ' ' + g.nat;
+    as.textContent = mdKr(d.date) + ' 기준' + (failed ? ', 최근 수집 실패' : '');
+    as.className = 'asof' + (failed ? ' stale' : '');
+    setChg($('ch-' + g.id), d.price, d.prev, g.ndp);
+    if (g.id === 'corn' || g.id === 'soy') {
+      const h = (d.history || []).map(p => ({ t: ymdLocal(p[0]).getTime(), v: g.toT(p[1]) }));
+      drawChart(g.id, h, g.color, 0); chartStats(g.id, h, 1);
+    }
+  });
+  const run = j.lastRun ? new Date(j.lastRun) : null, errs = (j.errors || []).length;
+  $('gr-src').textContent = (run ? (run.getMonth() + 1) + '월 ' + run.getDate() + '일 ' + hhmm(run) + ' 수집' : '') + (errs ? '   일부 소스 실패' : '');
+  $('gr-src').className = 'col-meta' + (errs ? ' err' : '');
+}
+/* News: Apps Script(mode=news)가 08시 무렵 만든 브라질 브리핑을 30초마다 1건씩 표시 */
+const NEWS_SEC = 30;
+function markWord(sentence, word) {                 // 예문 속 단어 강조 (안전하게 이스케이프)
+  const base = String(word || '').replace(/\s*\(.*\)\s*$/, '').trim(), s = String(sentence || '');
+  const i = base ? s.toLowerCase().indexOf(base.toLowerCase()) : -1;
+  return i < 0 ? esc(s) : esc(s.slice(0, i)) + '<b>' + esc(s.slice(i, i + base.length)) + '</b>' + esc(s.slice(i + base.length));
+}
+const dayKr = s => { const d = ymdLocal(s); return (d.getMonth() + 1) + '월 ' + d.getDate() + '일 (' + DOW_S[d.getDay()] + ')'; };
+let nwItems = [], nwIdx = 0, nwTimer = null, nwSig = '';
+function showStory() {
+  const box = $('nw-story'), bar = $('nw-prog');
+  if (!nwItems.length) { box.innerHTML = '<div class="nw-sum">해당 기간 주요 기사가 없습니다</div>'; return; }
+  nwIdx = nwIdx % nwItems.length;
+  const it = nwItems[nwIdx], v = (it.vocab || []).slice(0, 3);
+  box.innerHTML = '<div class="nw-fade" style="display:flex;flex-direction:column;flex:1;min-height:0">' +
+    '<div class="nw-count">' + (nwIdx + 1) + ' <span>/ ' + nwItems.length + '</span></div>' +
+    '<div class="nw-h">' + esc(it.title) + '</div>' +
+    (it.pt_title ? '<div class="nw-pt">' + esc(it.pt_title) + '</div>' : '') +
+    (it.summary ? '<div class="nw-sum">' + esc(it.summary) + '</div>' : '') +
+    '<div class="nw-src">' + esc((it.sources || []).join(', ')) + '</div>' +
+    (v.length ? '<div class="nw-vocab"><div class="lbl">기사 속 포르투갈어</div>' + v.map(w =>
+      '<div class="vc"><div class="pt">' + esc(w.pt) + '</div><div class="ko">' + esc(w.ko) + '</div>' +
+      (w.ex_pt ? '<div class="ex">' + markWord(w.ex_pt, w.pt) + '</div>' : '') + (w.ex_ko ? '<div class="exk">' + esc(w.ex_ko) + '</div>' : '') + '</div>').join('') + '</div>' : '') +
+    '</div>';
+  bar.style.transition = 'none'; bar.style.width = '0';
+  void bar.offsetWidth;
+  bar.style.transition = 'width ' + NEWS_SEC + 's linear'; bar.style.width = '100%';
+}
+function startRotation() {
+  if (nwTimer) clearInterval(nwTimer);
+  showStory();
+  nwTimer = setInterval(() => { nwIdx++; showStory(); }, NEWS_SEC * 1000);
+}
+async function refreshNews() {
+  let j;
+  try { j = await apiCall('mode=news', 60000); }
+  catch (e) { $('nw-meta').textContent = '브리핑 서버 연결 실패, 다음 갱신 때 재시도'; $('nw-meta').className = 'nw-meta err'; if (!nwItems.length) startRotation(); return; }
+  const n = j.news;
+  if (!n) { $('nw-meta').textContent = (j.error && j.error.message) || '아직 생성된 브리핑 없음'; $('nw-meta').className = 'nw-meta err'; return; }
+  $('nw-title').textContent = n.weekend ? '브라질 주말 브리핑' : '브라질 브리핑';
+  $('nw-date').textContent = (n.days.length > 1 ? dayKr(n.days[0]) + ' ~ ' + dayKr(n.days[n.days.length - 1]) : dayKr(n.days[0])) + '  현지 기준';
+  const g = new Date(n.generatedAt);
+  $('nw-meta').textContent = (n.mode === 'ai' ? 'AI 요약' + (n.model ? ' (' + n.model + ')' : '') : '헤드라인 번역 (AI 요약 실패)') + '   기사 ' + n.articleCount + '건 중 ' + (n.items || []).length + '건' + (n.progress && n.progress.done < n.progress.total && n.mode === 'ai' ? ' (나머지 처리 중)' : '') + '   ' + (g.getMonth() + 1) + '월 ' + g.getDate() + '일 ' + hhmm(g) + ' 생성';
+  $('nw-meta').className = 'nw-meta' + (n.mode === 'ai' ? '' : ' err');
+  if (n.generatedAt !== nwSig) { nwSig = n.generatedAt; nwItems = n.items || []; nwIdx = 0; startRotation(); }   // 새 브리핑일 때만 처음부터
+  else if ((n.items || []).length !== nwItems.length || n.mode === 'ai') { nwItems = n.items || []; }      // 이어서 완성된 기사는 순서 유지한 채 추가
+}
+/* ===== 공통: 직접 접속 → 막히면 Apps Script 중계 ===== */
+async function getJSON(url, ms) {
+  try {
+    const r = await fetchT(url, ms || 12000);
+    if (!r.ok) throw new Error('HTTP ' + r.status);
+    return await r.json();
+  } catch (e) {
+    if (!getApiUrl()) throw e;
+    const j = await apiCall('mode=proxy&u=' + encodeURIComponent(url), 30000);
+    if (j.status !== 200) throw new Error('중계 HTTP ' + j.status);
+    return JSON.parse(j.body);
+  }
+}
+const logoImg = (src, abbr, cls) => src
+  ? '<img class="' + (cls || '') + '" src="' + esc(src) + '" alt="" onerror="this.outerHTML=\'<span class=&quot;' + (cls || '') + ' txt&quot;>' + esc(abbr || '') + '</span>\'">'
+  : '<span class="' + (cls || '') + ' txt">' + esc(abbr || '') + '</span>';
+const kDate = d => (d.getMonth() + 1) + '/' + d.getDate() + '(' + DOW_S[d.getDay()] + ')';
+
+/* ===================== FUTEBOL: Brasileirão Série A (ESPN) ===================== */
+const FAVORITE_TEAM = '';            // 응원 팀 약어를 넣으면 순위표에서 강조 (예: 'FLA', 'PAL', 'COR', 'SAO')
+const ESPN = 'https://site.api.espn.com/apis';
+const ZONE_KO = d => /libertadores/i.test(d) && /qualif|pr[eé]/i.test(d) ? '리베르타도레스 예선' : /libertadores/i.test(d) ? '리베르타도레스' : /sul-?americana|sudamericana/i.test(d) ? '수다메리카나' : /relegation|rebaixamento/i.test(d) ? '강등권' : (d || '');
+let fbLive = false, fbLastFull = 0;
+function brtYmd(offsetDays) { const d = new Date(Date.now() + offsetDays * DAY - 3 * 3600000); return d.toISOString().slice(0, 10).replace(/-/g, ''); }
+async function refreshFootball(force) {
+  if (!force && !fbLive && Date.now() - fbLastFull < 9 * 60000) return;   // 경기 중이면 1분, 아니면 10분 간격
+  fbLastFull = Date.now();
+  let st, sb;
+  try { st = await getJSON(ESPN + '/v2/sports/soccer/bra.1/standings'); } catch (e) { $('fb-src').textContent = '순위 불러오기 실패, 다음 갱신 때 재시도'; $('fb-src').className = 'col-meta err'; }
+  try { sb = await getJSON(ESPN + '/site/v2/sports/soccer/bra.1/scoreboard?dates=' + brtYmd(-4) + '-' + brtYmd(6) + '&limit=60'); }
+  catch (e) { try { sb = await getJSON(ESPN + '/site/v2/sports/soccer/bra.1/scoreboard'); } catch (e2) {} }
+  if (st) renderStandings(st);
+  if (sb) renderMatches(sb);
+  if (st || sb) { $('fb-src').textContent = 'ESPN   ' + hhmm(new Date()) + ' 갱신' + (fbLive ? '   경기 진행 중, 1분마다 갱신' : ''); $('fb-src').className = 'col-meta'; }
+}
+function renderStandings(j) {
+  const ch = (j.children && j.children[0]) || j;
+  const entries = (ch.standings && ch.standings.entries) || [];
+  const rows = entries.map(e => {
+    const s = {}; (e.stats || []).forEach(x => { s[x.name] = x; });
+    const v = k => s[k] ? s[k].displayValue : '';
+    return { rank: Number(s.rank ? s.rank.value : 0), name: e.team.shortDisplayName || e.team.displayName, abbr: e.team.abbreviation,
+      logo: e.team.logos && e.team.logos[0] && e.team.logos[0].href, gp: v('gamesPlayed'), w: v('wins'), d: v('ties'), l: v('losses'),
+      gd: v('pointDifferential'), pts: v('points'), zc: e.note && e.note.color ? e.note.color.replace(/^#+/, '#') : '', zn: e.note ? ZONE_KO(e.note.description) : '' };
+  }).sort((a, b) => a.rank - b.rank);
+  const round = rows.reduce((m, r) => Math.max(m, Number(r.gp) || 0), 0);
+  const yr = (ch.name || '').match(/\d{4}/);
+  $('fb-title').textContent = '브라질레이랑 세리에 A';
+  $('fb-sub').textContent = (yr ? yr[0] + ' 시즌   ' : '') + (round ? round + '라운드' : '');
+  const head = '<div class="fb-row hd"><span class="pos">#</span><span></span><span>팀</span><span class="n">경기</span><span class="n">승-무-패</span><span class="n">득실</span><span class="n">승점</span></div>';
+  const row = r => '<div class="fb-row' + (FAVORITE_TEAM && r.abbr === FAVORITE_TEAM ? ' fav' : '') + '" style="--zc:' + (r.zc || 'transparent') + '">' +
+    '<span class="pos">' + r.rank + '</span>' + logoImg(r.logo, r.abbr, 'lg') + '<span class="nm">' + esc(r.name) + '</span>' +
+    '<span class="n">' + r.gp + '</span><span class="n">' + r.w + '-' + r.d + '-' + r.l + '</span><span class="n">' + esc(r.gd) + '</span><span class="pts">' + r.pts + '</span></div>';
+  $('fb-t1').innerHTML = head + rows.slice(0, 10).map(row).join('');
+  $('fb-t2').innerHTML = head + rows.slice(10, 20).map(row).join('');
+  const zones = []; rows.forEach(r => { if (r.zc && r.zn && !zones.some(z => z.n === r.zn)) zones.push({ c: r.zc, n: r.zn }); });
+  $('fb-legend').innerHTML = zones.map(z => '<span><i style="background:' + z.c + '"></i>' + esc(z.n) + '</span>').join('');
+}
+function renderMatches(j) {
+  const evs = (j.events || []).map(ev => {
+    const c = ev.competitions && ev.competitions[0]; if (!c) return null;
+    const side = h => { const t = c.competitors.find(x => x.homeAway === h) || {}; return { name: t.team ? (t.team.shortDisplayName || t.team.displayName) : '', abbr: t.team ? t.team.abbreviation : '', logo: t.team ? t.team.logo : '', score: t.score, win: t.winner }; };
+    const ty = (ev.status && ev.status.type) || {};
+    return { t: new Date(ev.date), state: ty.state, detail: ty.shortDetail || '', clock: ev.status ? ev.status.displayClock : '', home: side('home'), away: side('away') };
+  }).filter(Boolean);
+  fbLive = evs.some(e => e.state === 'in');
+  const live = evs.filter(e => e.state === 'in');
+  const recent = evs.filter(e => e.state === 'post').sort((a, b) => b.t - a.t).slice(0, 5);
+  const next = evs.filter(e => e.state === 'pre').sort((a, b) => a.t - b.t).slice(0, 5);
+  const mt = e => {
+    const when = e.state === 'in' ? '<span class="when live"><span class="live-dot"></span>' + esc(e.clock || e.detail) + '</span>'
+      : '<span class="when">' + kDate(e.t) + '<br>' + hhmm(e.t) + '</span>';
+    const sc = e.state === 'pre' ? '<span class="sc pre">vs</span>' : '<span class="sc">' + esc(e.home.score) + ' : ' + esc(e.away.score) + '</span>';
+    return '<div class="mt">' + when + '<span class="tm h' + (e.home.win ? ' win' : '') + '"><span>' + esc(e.home.name) + '</span>' + logoImg(e.home.logo, e.home.abbr) + '</span>' + sc +
+      '<span class="tm' + (e.away.win ? ' win' : '') + '">' + logoImg(e.away.logo, e.away.abbr) + '<span>' + esc(e.away.name) + '</span></span></div>';
+  };
+  let html = '';
+  if (live.length) html += '<h4>진행 중</h4>' + live.map(mt).join('');
+  if (recent.length) html += '<h4>최근 결과</h4>' + recent.slice(0, live.length ? 3 : 5).map(mt).join('');
+  if (next.length) html += '<h4>다음 경기 (한국 시간)</h4>' + next.slice(0, live.length ? 3 : 5).map(mt).join('');
+  $('fb-m').innerHTML = html || '<div class="ae-empty">표시할 경기가 없습니다</div>';
+}
+
+/* ===================== AERO: 서울 상공 항공기 (adsb.lol / airplanes.live) ===================== */
+const AE_RADIUS_NM = 35;                                   // 반경 약 65km (인천공항 포함)
+const AE_KM = AE_RADIUS_NM * 1.852;
+const AIRPORTS = [{ n: '인천', lat: 37.4602, lon: 126.4407 }, { n: '김포', lat: 37.5583, lon: 126.7906 }];
+const AIRLINES = { KAL: '대한항공', AAR: '아시아나', JJA: '제주항공', JNA: '진에어', TWB: '티웨이', ABL: '에어부산', ASV: '에어서울', ESR: '이스타',
+  APZ: '에어프레미아', EOK: '에어로케이', ANA: '전일본공수', JAL: '일본항공', APJ: '피치항공', CPA: '캐세이', CES: '중국동방', CCA: '중국국제', CSN: '중국남방',
+  CHH: '하이난', CXA: '샤먼항공', CSZ: '선전항공', UAL: '유나이티드', DAL: '델타', AAL: '아메리칸', UPS: 'UPS', FDX: '페덱스', GTI: '아틀라스', CKS: '칼리타',
+  UAE: '에미레이트', QTR: '카타르', ETD: '에티하드', SIA: '싱가포르', THA: '타이항공', VJC: '비엣젯', HVN: '베트남항공', PAL: '필리핀항공', CEB: '세부퍼시픽',
+  CAL: '중화항공', EVA: '에바항공', AFR: '에어프랑스', DLH: '루프트한자', KLM: 'KLM', FIN: '핀에어', BAW: '영국항공', THY: '터키항공', ACA: '에어캐나다',
+  QFA: '콴타스', MAS: '말레이시아', GIA: '가루다', MGL: '미아트몽골', AUA: '오스트리아', LOT: '폴란드항공', ETH: '에티오피아', SVA: '사우디아', TAM: 'LATAM' };
+const CITY = { ICN: '인천', GMP: '김포', CJU: '제주', PUS: '김해', TAE: '대구', KWJ: '광주', RSU: '여수', USN: '울산', CJJ: '청주', MWX: '무안', YNY: '양양', KPO: '포항',
+  NRT: '나리타', HND: '하네다', KIX: '간사이', NGO: '나고야', FUK: '후쿠오카', CTS: '삿포로', OKA: '오키나와', PEK: '베이징', PKX: '베이징 다싱', PVG: '상하이 푸둥', SHA: '상하이 훙차오',
+  CAN: '광저우', SZX: '선전', TAO: '칭다오', SHE: '선양', DLC: '다롄', YNJ: '옌지', HKG: '홍콩', MFM: '마카오', TPE: '타이베이', KHH: '가오슝', BKK: '방콕', DMK: '방콕 돈므앙',
+  SGN: '호찌민', HAN: '하노이', DAD: '다낭', CXR: '나트랑', MNL: '마닐라', CEB: '세부', SIN: '싱가포르', KUL: '쿠알라룸푸르', CGK: '자카르타', DPS: '발리', ULN: '울란바토르',
+  LAX: '로스앤젤레스', SFO: '샌프란시스코', SEA: '시애틀', JFK: '뉴욕', EWR: '뉴어크', ORD: '시카고', ATL: '애틀랜타', DFW: '댈러스', IAD: '워싱턴', HNL: '호놀룰루', GUM: '괌', SPN: '사이판',
+  ANC: '앵커리지', YVR: '밴쿠버', YYZ: '토론토', CDG: '파리', FRA: '프랑크푸르트', LHR: '런던', AMS: '암스테르담', HEL: '헬싱키', IST: '이스탄불', DXB: '두바이', DOH: '도하', AUH: '아부다비',
+  SYD: '시드니', BNE: '브리즈번', GRU: '상파울루', GIG: '리우', EZE: '부에노스아이레스', SCL: '산티아고', LIM: '리마', BOG: '보고타', MEX: '멕시코시티' };
+const aeTrails = {}, aeRoutes = {};
+let aeTimer = null;
+const kmXY = (lat, lon) => ({ x: (lon - LON) * 111.32 * Math.cos(LAT * Math.PI / 180), y: (lat - LAT) * 110.57 });
+const altColor = ft => ft == null ? '#94a3b8' : ft < 5000 ? '#fbbf24' : ft < 15000 ? '#fb923c' : ft < 30000 ? '#e2e8f0' : '#7dd3fc';
+async function fetchAircraft() {
+  const srcs = [
+    { n: 'adsb.lol', u: 'https://api.adsb.lol/v2/lat/' + LAT + '/lon/' + LON + '/dist/' + AE_RADIUS_NM },
+    { n: 'airplanes.live', u: 'https://api.airplanes.live/v2/point/' + LAT + '/' + LON + '/' + AE_RADIUS_NM }
+  ];
+  let err = '';
+  for (const s of srcs) { try { const j = await getJSON(s.u, 10000); return { ac: j.ac || j.aircraft || [], src: s.n }; } catch (e) { err += s.n + ' ' + e.message + ' '; } }
+  throw new Error(err);
+}
+// 노선 조회: ① adsb.lol 직접 → ② Apps Script(서버에서 adsb.lol + adsbdb) → ③ adsbdb 직접
+const ICAO2IATA = { RKSI: 'ICN', RKSS: 'GMP', RKPC: 'CJU', RKPK: 'PUS', RKTN: 'TAE', RKJJ: 'KWJ', RKJY: 'RSU', RKPU: 'USN', RKTU: 'CJJ', RKJB: 'MWX', RKNY: 'YNY', RKTH: 'KPO',
+  RJAA: 'NRT', RJTT: 'HND', RJBB: 'KIX', RJGG: 'NGO', RJFF: 'FUK', RJCC: 'CTS', ROAH: 'OKA', ZBAA: 'PEK', ZBAD: 'PKX', ZSPD: 'PVG', ZSSS: 'SHA', ZGGG: 'CAN', ZGSZ: 'SZX',
+  ZSQD: 'TAO', ZYTX: 'SHE', ZYTL: 'DLC', ZYYJ: 'YNJ', VHHH: 'HKG', VMMC: 'MFM', RCTP: 'TPE', RCKH: 'KHH', VTBS: 'BKK', VTBD: 'DMK', VVTS: 'SGN', VVNB: 'HAN', VVDN: 'DAD', VVCR: 'CXR',
+  RPLL: 'MNL', RPVM: 'CEB', WSSS: 'SIN', WMKK: 'KUL', WIII: 'CGK', WADD: 'DPS', ZMCK: 'ULN', KLAX: 'LAX', KSFO: 'SFO', KSEA: 'SEA', KJFK: 'JFK', KEWR: 'EWR', KORD: 'ORD', KATL: 'ATL',
+  KDFW: 'DFW', KIAD: 'IAD', PHNL: 'HNL', PGUM: 'GUM', PGSN: 'SPN', PANC: 'ANC', CYVR: 'YVR', CYYZ: 'YYZ', LFPG: 'CDG', EDDF: 'FRA', EGLL: 'LHR', EHAM: 'AMS', EFHK: 'HEL', LTFM: 'IST',
+  OMDB: 'DXB', OTHH: 'DOH', OMAA: 'AUH', YSSY: 'SYD', YBBN: 'BNE', SBGR: 'GRU', SBGL: 'GIG', SAEZ: 'EZE', SCEL: 'SCL', SPJC: 'LIM', SKBO: 'BOG', MMMX: 'MEX' };
+const toIata = c => ICAO2IATA[c] || c;
+const routeOf = cs => { const r = aeRoutes[cs]; return r && r.r ? r.r : null; };
+async function fetchRoutes(list) {
+  const now = Date.now();
+  const need = list.filter(a => a.cs && (!aeRoutes[a.cs] || (aeRoutes[a.cs].miss && now - aeRoutes[a.cs].t > 30 * 60000))).slice(0, 30);
+  if (!need.length) return;
+  need.forEach(a => { aeRoutes[a.cs] = { pending: true, t: now }; });
+  const got = {};
+  const put = (cs, arr) => { if (cs && arr && arr.length >= 2 && arr[0] && arr[arr.length - 1]) got[cs.trim()] = [toIata(arr[0]), toIata(arr[arr.length - 1])]; };
+  try {
+    const r = await fetchT('https://api.adsb.lol/api/0/routeset', 12000, { method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ planes: need.map(a => ({ callsign: a.cs, lat: a.lat, lng: a.lon })) }) });
+    if (r.ok) (await r.json()).forEach(x => { const c = x && x._airport_codes_iata; if (c && !/unknown/i.test(c) && x.plausible !== 0 && x.plausible !== false) put(x.callsign, c.split('-')); });
+  } catch (e) { console.warn('routeset direct failed:', e.message); }
+  let rest = need.filter(a => !got[a.cs]);
+  if (rest.length && getApiUrl()) {
+    try {
+      const j = await apiCall('mode=routes&lat=' + LAT + '&lon=' + LON + '&cs=' + encodeURIComponent(rest.map(a => a.cs).join(',')), 90000);   // 구글 검색 포함이라 여유 있게
+      Object.keys(j.routes || {}).forEach(c => { if (j.routes[c]) put(c, j.routes[c]); });
+    } catch (e) { console.warn('routes via Apps Script failed:', e.message); }
+    rest = need.filter(a => !got[a.cs]);
+  }
+  for (const a of rest.slice(0, 6)) {
+    try {
+      const r = await fetchT('https://api.adsbdb.com/v0/callsign/' + encodeURIComponent(a.cs), 8000);
+      if (!r.ok) continue;
+      const fr = ((await r.json()).response || {}).flightroute, code = p => p && (p.iata_code || p.icao_code);
+      if (fr) put(a.cs, [code(fr.origin), code(fr.destination)]);
+    } catch (e) {}
+  }
+  need.forEach(a => { aeRoutes[a.cs] = got[a.cs] ? { r: got[a.cs], t: now } : { miss: true, t: now }; });
+}
+async function refreshFlights() {
+  if (VARIANT === 'all' && CUR !== 'flights') return;   // iPad: 항공 화면을 보고 있을 때만 15초 갱신
+  let data;
+  try { data = await fetchAircraft(); }
+  catch (e) { $('ae-src').textContent = '항공기 데이터 연결 실패, 15초 뒤 재시도'; $('ae-src').className = 'col-meta err'; return; }
+  const list = data.ac.filter(a => a.lat != null && a.lon != null && a.alt_baro !== 'ground').map(a => {
+    const p = kmXY(a.lat, a.lon), cs = (a.flight || '').trim();
+    return { hex: a.hex, cs: cs, reg: a.r || '', type: a.t || '', lat: a.lat, lon: a.lon, x: p.x, y: p.y, km: Math.hypot(p.x, p.y),
+      alt: typeof a.alt_baro === 'number' ? a.alt_baro : (typeof a.alt_geom === 'number' ? a.alt_geom : null), gs: a.gs, trk: a.track != null ? a.track : a.true_heading };
+  }).filter(a => a.km <= AE_KM * 1.02).sort((a, b) => a.km - b.km);
+  const now = Date.now();
+  list.forEach(a => { const t = aeTrails[a.hex] = (aeTrails[a.hex] || []).filter(p => now - p.t < 4 * 60000); t.push({ x: a.x, y: a.y, t: now }); if (t.length > 16) t.shift(); });
+  Object.keys(aeTrails).forEach(h => { if (!list.some(a => a.hex === h)) delete aeTrails[h]; });
+  fetchRoutes(list).then(() => renderFlightList(list));
+  drawRadar(list); renderFlightList(list);
+  $('ae-sub').textContent = '사무실 반경 ' + Math.round(AE_KM) + 'km   ' + list.length + '대 비행 중';
+  $('ae-src').textContent = data.src + '   ' + hhmm(new Date()) + ':' + pad(new Date().getSeconds()); $('ae-src').className = 'col-meta';
+}
+function drawRadar(list) {
+  const S = 640, C = S / 2, k = (C - 24) / AE_KM, P = (x, y) => [C + x * k, C - y * k];
+  let g = '';
+  [10, 25, 50].forEach(r => { if (r <= AE_KM) g += '<circle class="ring" cx="' + C + '" cy="' + C + '" r="' + (r * k).toFixed(1) + '"/><text class="rl" x="' + (C + 6) + '" y="' + (C - r * k + 16).toFixed(1) + '">' + r + 'km</text>'; });
+  g += '<circle class="ring" cx="' + C + '" cy="' + C + '" r="' + (AE_KM * k).toFixed(1) + '" style="stroke:rgba(255,255,255,.22)"/>';
+  g += '<line class="ring" x1="' + C + '" y1="24" x2="' + C + '" y2="' + (S - 24) + '"/><line class="ring" x1="24" y1="' + C + '" x2="' + (S - 24) + '" y2="' + C + '"/>';
+  g += '<text class="rl" x="' + (C + 6) + '" y="40">N</text>';
+  AIRPORTS.forEach(a => { const p = kmXY(a.lat, a.lon), q = P(p.x, p.y); g += '<rect class="ap" x="' + (q[0] - 5) + '" y="' + (q[1] - 5) + '" width="10" height="10" rx="2"/><text class="apl" x="' + (q[0] + 10) + '" y="' + (q[1] + 5) + '">' + a.n + '</text>'; });
+  g += '<circle class="home" cx="' + C + '" cy="' + C + '" r="6"/><text class="homel" x="' + (C + 10) + '" y="' + (C + 18) + '">ASTROS</text>';
+  list.forEach(a => {
+    const col = altColor(a.alt), t = aeTrails[a.hex] || [];
+    if (t.length > 1) g += '<polyline class="trail" stroke="' + col + '" points="' + t.map(p => P(p.x, p.y).map(v => v.toFixed(1)).join(',')).join(' ') + '"/>';
+    const q = P(a.x, a.y);
+    g += '<g transform="translate(' + q[0].toFixed(1) + ',' + q[1].toFixed(1) + ') rotate(' + (a.trk || 0) + ')"><path d="M0,-11 L2,-3 L10,2 L10,4 L2,2 L1.5,8 L4,10 L4,11.5 L0,10.5 L-4,11.5 L-4,10 L-1.5,8 L-2,2 L-10,4 L-10,2 L-2,-3 Z" fill="' + col + '"/></g>';
+    if (a.cs) g += '<text class="cs" x="' + (q[0] + 13).toFixed(1) + '" y="' + (q[1] - 9).toFixed(1) + '">' + esc(a.cs) + '</text>';
+  });
+  $('radar').innerHTML = g;
+}
+const airlineOf = cs => AIRLINES[(cs || '').slice(0, 3)] || '';
+const AL_IATA = { KAL: 'KE', AAR: 'OZ', JJA: '7C', JNA: 'LJ', TWB: 'TW', ABL: 'BX', ASV: 'RS', ESR: 'ZE', APZ: 'YP', EOK: 'RF', ANA: 'NH', JAL: 'JL', APJ: 'MM', CPA: 'CX', CES: 'MU',
+  CCA: 'CA', CSN: 'CZ', CHH: 'HU', CXA: 'MF', CSZ: 'ZH', UAL: 'UA', DAL: 'DL', AAL: 'AA', FDX: 'FX', UPS: '5X', GTI: '5Y', CKS: 'K4', UAE: 'EK', QTR: 'QR', ETD: 'EY', SIA: 'SQ',
+  THA: 'TG', VJC: 'VJ', HVN: 'VN', PAL: 'PR', CEB: '5J', CAL: 'CI', EVA: 'BR', AFR: 'AF', DLH: 'LH', KLM: 'KL', FIN: 'AY', BAW: 'BA', THY: 'TK', ACA: 'AC', QFA: 'QF', MAS: 'MH',
+  GIA: 'GA', MGL: 'OM', AUA: 'OS', LOT: 'LO', ETH: 'ET', SVA: 'SV' };
+const flightNo = cs => { const m = String(cs || '').match(/^([A-Z]{3})0*(\d+[A-Z]?)$/); return m && AL_IATA[m[1]] ? AL_IATA[m[1]] + m[2] : ''; };
+const cityOf = c => CITY[c] ? CITY[c] : c;
+function renderFlightList(list) {
+  if (!list.length) {
+    $('ae-stats').innerHTML = '';
+    $('fl-list').innerHTML = '<div class="ae-empty">지금 반경 안에 수신되는 항공기가 없습니다.<br>이 지역 수신기 커버리지가 낮거나 데이터 지연일 수 있습니다.</div>';
+    return;
+  }
+  const hi = list.filter(a => a.alt != null).sort((a, b) => b.alt - a.alt)[0], fast = list.filter(a => a.gs).sort((a, b) => b.gs - a.gs)[0];
+  let arr = 0, dep = 0;
+  list.forEach(a => { const r = routeOf(a.cs); if (r) { if (/^(ICN|GMP)$/.test(r[r.length - 1])) arr++; else if (/^(ICN|GMP)$/.test(r[0])) dep++; } });
+  $('ae-stats').innerHTML =
+    '<div><div class="k">비행 중</div><div class="v">' + list.length + '<small style="font-size:16px;color:var(--t2)"> 대</small></div><div class="s">도착 ' + arr + '   출발 ' + dep + '</div></div>' +
+    '<div><div class="k">가장 가까운</div><div class="v">' + list[0].km.toFixed(1) + '<small style="font-size:16px;color:var(--t2)"> km</small></div><div class="s">' + esc(list[0].cs || list[0].reg) + '</div></div>' +
+    '<div><div class="k">가장 높은</div><div class="v">' + (hi ? fmtN(hi.alt * 0.3048, 0) : '--') + '<small style="font-size:16px;color:var(--t2)"> m</small></div><div class="s">' + esc(hi ? hi.cs || hi.reg : '') + '</div></div>' +
+    '<div><div class="k">가장 빠른</div><div class="v">' + (fast ? fmtN(fast.gs * 1.852, 0) : '--') + '<small style="font-size:16px;color:var(--t2)"> km/h</small></div><div class="s">' + esc(fast ? fast.cs || fast.reg : '') + '</div></div>';
+  const head = '<div class="fl hd"><span>편명</span><span>노선</span><span>기종</span><span class="n">고도</span><span class="n">속도</span><span class="n">거리</span></div>';
+  const rows = list.slice(0, 9).map(a => {
+    const r = routeOf(a.cs), st = aeRoutes[a.cs];
+    const route = r ? esc(cityOf(r[0])) + ' → ' + esc(cityOf(r[r.length - 1])) + '<small>' + esc(r[0]) + '-' + esc(r[r.length - 1]) + '</small>'
+      : '<small>' + (!a.cs ? '편명 미송출' : st && st.pending ? '노선 조회 중' : '노선 정보 없음') + '</small>';
+    return '<div class="fl"><div><div class="cs1"><span class="dot" style="background:' + altColor(a.alt) + '"></span>' + esc(a.cs || a.reg || a.hex) + '</div><div class="al">' + esc([flightNo(a.cs), airlineOf(a.cs) || a.reg].filter(Boolean).join('  ')) + '</div></div>' +
+      '<div class="rt">' + route + '</div><div class="ty">' + esc(a.type) + '</div>' +
+      '<div class="n">' + (a.alt != null ? fmtN(a.alt * 0.3048, 0) + '<small>m</small>' : '--') + '</div>' +
+      '<div class="n">' + (a.gs ? fmtN(a.gs * 1.852, 0) + '<small>km/h</small>' : '--') + '</div><div class="n">' + a.km.toFixed(1) + '<small>km</small></div></div>';
+  }).join('');
+  $('fl-list').innerHTML = head + rows;
+}
+/* ===================== DIAMOND: KBO 리그 (Apps Script mode=kbo) ===================== */
+const KBO_COLOR = { KIA: '#ea0029', 삼성: '#3b82f6', LG: '#c30452', 두산: '#6366f1', KT: '#ef4444', SSG: '#ce0e2d', 롯데: '#60a5fa', 한화: '#ff6600', NC: '#4f7cc4', 키움: '#a3243b' };
+const KBO_TICKER = ['타율', '홈런', '타점', '안타', '득점', '도루', '출루율', '장타율', 'OPS', '평균자책점', '승리', '탈삼진', '세이브', '홀드', 'WHIP'];
+let kbLive = false, kbLast = 0, kbTkSig = '';
+const tdot = t => '<i style="background:' + (KBO_COLOR[t] || '#94a3b8') + '"></i>';
+const ymdKr = s => { const d = new Date(+s.slice(0, 4), +s.slice(4, 6) - 1, +s.slice(6, 8)); return (d.getMonth() + 1) + '월 ' + d.getDate() + '일 (' + DOW_S[d.getDay()] + ')'; };
+async function refreshKbo(force) {
+  if (!force && !kbLive && Date.now() - kbLast < 4.5 * 60000) return;   // 경기 중 1분, 평소 5분
+  kbLast = Date.now();
+  let j;
+  try { j = await apiCall('mode=kbo', 60000); }
+  catch (e) { $('kb-src').textContent = 'KBO 데이터 연결 실패, 다음 갱신 때 재시도'; $('kb-src').className = 'col-meta err'; return; }
+  if (j.standings) renderKboStand(j.standings);
+  const d0 = j.date || ymd(new Date()).replace(/-/g, ''), d1 = ymd(addDays(new Date(), 1)).replace(/-/g, '');
+  $('kb-t0h').innerHTML = '오늘 경기 <small>' + ymdKr(d0) + '</small>';
+  $('kb-t1h').innerHTML = '내일 경기 <small>' + ymdKr(d1) + '</small>';
+  renderKboGames('kb-t0', j.today || [], false);
+  renderKboGames('kb-t1', j.tomorrow || [], true);
+  kbLive = (j.today || []).some(g => g.state === 'live');
+  if (j.top5) renderTicker(j.top5);
+  const g = (j.standings || [])[0];
+  $('kb-sub').textContent = (g ? g.g + '경기 기준' : '') + (kbLive ? '   경기 진행 중' : '');
+  $('kb-src').textContent = 'KBO   ' + hhmm(new Date(j.at || Date.now())) + ' 갱신' + ((j.errors || []).length ? '   일부 실패' : '');
+  $('kb-src').className = 'col-meta' + ((j.errors || []).length ? ' err' : '');
+  if ((j.errors || []).length) console.warn('KBO errors', j.errors);
+}
+function renderKboStand(rows) {
+  const head = '<div class="st hd"><span class="rk">#</span><span>팀</span><span class="n">경기</span><span class="n">승-무-패</span><span class="n">승률</span><span class="n">차</span><span class="n">최근10</span><span class="n">연속</span></div>';
+  $('kb-st').innerHTML = head + rows.map(r => {
+    const l10 = String(r.last10 || '').replace(/(\d+)승(\d+)무(\d+)패/, '$1-$2-$3');
+    const stk = String(r.streak || ''), cls = /승/.test(stk) ? 'w' : /패/.test(stk) ? 'l' : '';
+    return '<div class="st"><span class="rk">' + r.rank + '</span><span class="tm">' + tdot(r.team) + esc(r.team) + '</span><span class="n">' + esc(r.g) + '</span>' +
+      '<span class="n">' + esc(r.w) + '-' + esc(r.d) + '-' + esc(r.l) + '</span><span class="pct">' + esc(String(r.pct).replace(/^0\./, '.')) + '</span>' +
+      '<span class="n">' + esc(r.gb) + '</span><span class="n">' + esc(l10) + '</span><span class="n stk ' + cls + '">' + esc(stk) + '</span></div>';
+  }).join('');
+}
+function renderKboGames(id, games, tomorrow) {
+  if (!games.length) { $(id).innerHTML = '<div class="kb-none">' + (tomorrow ? '내일은' : '오늘은') + ' 예정된 경기가 없습니다</div>'; return; }
+  $(id).innerHTML = games.map(g => {
+    let status = '<span>' + esc(g.time) + '   ' + esc(g.stadium) + '</span>', right = '';
+    if (g.state === 'live') right = '<span class="live"><span class="live-dot"></span>' + esc(g.inning || '진행 중') + '</span>';
+    else if (g.state === 'post') right = '<span>경기 종료</span>';
+    else if (g.state === 'cancel') right = '<span class="cancel">' + esc(g.cancel || '취소') + '</span>';
+    const scored = g.state === 'live' || g.state === 'post';
+    const aw = scored && +g.as > +g.hs, hw = scored && +g.hs > +g.as;
+    const sc = scored ? '<span class="sc">' + esc(g.as) + ' : ' + esc(g.hs) + '</span>' : '<span class="sc pre">vs</span>';
+    let sp;
+    if (g.state === 'post' && (g.wp || g.lp)) sp = '<div class="sp"><span>' + (aw ? '승 ' + esc(g.wp) : '패 ' + esc(g.lp)) + '</span><span class="lbl">결과</span><span>' + (hw ? '승 ' + esc(g.wp) : '패 ' + esc(g.lp)) + '</span></div>';
+    else sp = '<div class="sp"><span>' + esc(g.awaySp || '미정') + '</span><span class="lbl">선발</span><span>' + esc(g.homeSp || '미정') + '</span></div>';
+    return '<div class="gm' + (tomorrow ? ' compact' : '') + '"><div class="top">' + status + right + '</div>' +
+      '<div class="mid"><span class="tn' + (aw ? ' win' : '') + '">' + tdot(g.away) + esc(g.away) + '</span>' + sc + '<span class="tn h' + (hw ? ' win' : '') + '">' + esc(g.home) + tdot(g.home) + '</span></div>' + sp + '</div>';
+  }).join('');
+}
+function renderTicker(top5) {
+  const cats = KBO_TICKER.filter(c => top5[c]).concat(Object.keys(top5).filter(c => KBO_TICKER.indexOf(c) < 0));
+  const fmtV = (c, v) => /타율|출루율|장타율/.test(c) ? String(v).replace(/^0\./, '.') : v;
+  const one = cats.map(c => '<span class="tk-cat">' + esc(c) + '</span>' + top5[c].map((p, i) =>
+    '<span class="tk-it"><b>' + (i + 1) + '</b>' + esc(p.name) + '<small>' + esc(p.team) + '</small><span class="v">' + esc(fmtV(c, p.v)) + '</span></span>').join('')).join('');
+  const sig = one.length + ':' + cats.join(',');
+  if (sig === kbTkSig) return;                                         // 같은 내용이면 애니메이션을 끊지 않음
+  kbTkSig = sig;
+  const el = $('kb-tk');
+  el.innerHTML = one + one;                                            // 두 번 이어 붙여 끊김 없이 순환
+  requestAnimationFrame(() => { const w = el.scrollWidth / 2; el.style.setProperty('--dur', Math.max(40, w / 70).toFixed(0) + 's'); });   // 초당 약 70px
+}
+/* ===================== ANDES: 국내 언론 중남미·브라질 기사 (Apps Script mode=krfull) =====================
+ * 기사 1건씩 40초. 제목 고정, 본문이 길면 3초 뒤부터 천천히 위로 흐름 */
+const KF_SEC = 40;
+let kfItems = [], kfIdx = 0, kfTimer = null, kfScroll = null, kfSig = '', kfNeedKey = false;
+function kfShow() {
+  const box = $('kf'), bar = $('kf-prog');
+  if (kfScroll) { clearTimeout(kfScroll); kfScroll = null; }
+  if (!kfItems.length) { box.innerHTML = '<div class="kf-none">오늘 관련 기사가 없습니다</div>'; return; }
+  kfIdx = kfIdx % kfItems.length;
+  const n = kfItems[kfIdx], t = new Date(n.time);
+  const paras = String(n.body || '').split(/\n+/).filter(Boolean);
+  const body = paras.length ? paras.map((p, i) => '<p' + (i === 0 && p.length < 60 ? ' class="lead"' : '') + '>' + esc(p) + '</p>').join('')
+    : '<p class="kf-none">' + '원문 페이지에서 본문을 불러오지 못했습니다. 제목만 표시합니다.' + '</p>';
+  box.innerHTML = '<div class="kf-meta"><span class="cat' + (n.cat === 'brazil' ? ' br' : '') + '">' + (n.cat === 'brazil' ? '브라질' : '중남미') + '</span>' +
+    (n.tag && n.tag !== '중남미' ? '<span class="tg">' + esc(n.tag) + '</span>' : '') + '<span>' + esc(n.source) + '</span><span>' + (n.today ? '' : '어제 ') + hhmm(t) + '</span>' +
+    (n.outlets > 1 ? '<span class="hot">' + n.outlets + '개 매체 보도</span>' : '') + '<span class="cnt">' + (kfIdx + 1) + ' / ' + kfItems.length + '</span></div>' +
+    '<div class="kf-t nw-fade">' + esc(n.title) + '</div><div class="kf-body" id="kf-body"><div class="kf-in" id="kf-in">' + body + '</div></div>';
+  bar.style.transition = 'none'; bar.style.width = '0'; void bar.offsetWidth;
+  bar.style.transition = 'width ' + KF_SEC + 's linear'; bar.style.width = '100%';
+  const inner = $('kf-in'), view = $('kf-body');
+  requestAnimationFrame(() => {
+    if (!view.clientHeight) return;                                   // 숨겨진 상태에서는 스크롤 계산 안 함
+    const over = inner.scrollHeight - view.clientHeight + 40;          // 마지막 문단까지 보이도록 여유
+    if (over > 0) kfScroll = setTimeout(() => { inner.style.transition = 'transform ' + (KF_SEC - 7) + 's linear'; inner.style.transform = 'translateY(-' + over + 'px)'; }, 3000);
+  });
+}
+function kfStart() { if (kfTimer) clearInterval(kfTimer); kfShow(); kfTimer = setInterval(() => { kfIdx++; kfShow(); }, KF_SEC * 1000); }
+async function refreshKrNews() {
+  let j;
+  try { j = await apiCall('mode=krfull', 90000); }
+  catch (e) { $('kn-src').textContent = '뉴스 서버 연결 실패, 다음 갱신 때 재시도'; $('kn-src').className = 'col-meta err'; if (!kfItems.length) kfStart(); return; }
+  kfNeedKey = !!j.needKey;
+  const now = new Date();
+  $('kn-sub').textContent = (now.getMonth() + 1) + '월 ' + now.getDate() + '일   중남미·브라질 번갈아 ' + (j.items || []).length + '건, 기사당 ' + KF_SEC + '초';
+  $('kn-src').textContent = (j.source || 'Bing 뉴스') + '   ' + hhmm(new Date(j.at || Date.now())) + ' 수집' + ((j.errors || []).length ? '   일부 실패' : '');
+  $('kn-src').className = 'col-meta' + ((j.errors || []).length ? ' err' : '');
+  const sig = (j.items || []).map(n => n.title).join('|');
+  if (sig !== kfSig) { kfSig = sig; kfItems = j.items || []; kfIdx = 0; kfStart(); }   // 새 기사 묶음일 때만 처음부터
+}
+/* ===================== LIFECYCLE ===================== */
+let refreshSec = 600, dataTimer = null, started = false, lastApi = '';
+const readRefresh = () => (typeof refreshSeconds !== 'undefined') ? Math.max(60, Number(refreshSeconds) || 600) : 600;
+function startTimer() { if (dataTimer) clearInterval(dataTimer); dataTimer = setInterval(refreshData, refreshSec * 1000); }
+function refreshData() {
+  refreshWeather();
+  if (on('schedule')) refreshCalendar();
+  if (on('fx')) refreshFx();
+  if (on('metals')) refreshMetals();
+  if (on('grains')) refreshGrains();
+  if (on('news')) refreshNews();
+  if (on('futebol')) refreshFootball(true);
+  if (on('kbo')) refreshKbo(true);
+  if (on('latam')) refreshKrNews();
+}
+function init() {
+  if (started) { update(); return; }
+  started = true; refreshSec = readRefresh(); lastApi = getApiUrl();
+  tickClock(); setInterval(tickClock, 1000); renderPages(); applyBgStrength();
+  refreshData(); startTimer();
+  if (on('futebol')) setInterval(() => refreshFootball(false), 60000);              // 경기 중이면 1분마다
+  if (on('flights')) { refreshFlights(); setInterval(refreshFlights, 15000); }   // 항공기는 15초마다
+  if (on('kbo')) setInterval(() => refreshKbo(false), 60000);                    // 경기 중이면 1분마다
+}
+function update() {
+  const n = readRefresh(); if (n !== refreshSec) { refreshSec = n; startTimer(); }
+  const a = getApiUrl(); if (a !== lastApi) { lastApi = a; refreshData(); }
+  tickClock(); renderPages(); applyBgStrength();
+}
+icueEvents = { onICUEInitialized: init, onDataUpdated: update };
+if (typeof iCUE_initialized !== 'undefined' && iCUE_initialized) init();
+if (typeof iCUE_initialized === 'undefined') setTimeout(init, 200);
+
+/* ===================== iPad: 화면 전환·설정 ===================== */
+const IPAD_ORDER = [["schedule", "일정"], ["kbo", "야구"], ["flights", "항공"], ["futebol", "축구"], ["news", "뉴스"], ["fx", "환율"], ["grains", "곡물"], ["metals", "금속"], ["latam", "중남미"]];
+const THEME_OF = {"futebol": "futebol", "fx": "ipanema", "grains": "safra", "kbo": "diamond", "latam": "andes", "metals": "brass", "news": "brasil", "schedule": "seoul", "flights": "aero"}, BG_MAP = {"futebol": ["resources/bg/futebol-morning-0.svg", "resources/bg/futebol-morning-1.svg", "resources/bg/futebol-afternoon-0.svg", "resources/bg/futebol-afternoon-1.svg", "resources/bg/futebol-evening-0.svg", "resources/bg/futebol-evening-1.svg", "resources/bg/futebol-night-0.svg", "resources/bg/futebol-night-1.svg"], "fx": ["resources/bg/fx-morning-0.svg", "resources/bg/fx-morning-1.svg", "resources/bg/fx-afternoon-0.svg", "resources/bg/fx-afternoon-1.svg", "resources/bg/fx-evening-0.svg", "resources/bg/fx-evening-1.svg", "resources/bg/fx-night-0.svg", "resources/bg/fx-night-1.svg"], "grains": ["resources/bg/grains-morning-0.svg", "resources/bg/grains-morning-1.svg", "resources/bg/grains-afternoon-0.svg", "resources/bg/grains-afternoon-1.svg", "resources/bg/grains-evening-0.svg", "resources/bg/grains-evening-1.svg", "resources/bg/grains-night-0.svg", "resources/bg/grains-night-1.svg"], "kbo": ["resources/bg/kbo-morning-0.svg", "resources/bg/kbo-morning-1.svg", "resources/bg/kbo-afternoon-0.svg", "resources/bg/kbo-afternoon-1.svg", "resources/bg/kbo-evening-0.svg", "resources/bg/kbo-evening-1.svg", "resources/bg/kbo-night-0.svg", "resources/bg/kbo-night-1.svg"], "latam": ["resources/bg/latam-morning-0.svg", "resources/bg/latam-morning-1.svg", "resources/bg/latam-afternoon-0.svg", "resources/bg/latam-afternoon-1.svg", "resources/bg/latam-evening-0.svg", "resources/bg/latam-evening-1.svg", "resources/bg/latam-night-0.svg", "resources/bg/latam-night-1.svg"], "metals": ["resources/bg/metals-morning-0.svg", "resources/bg/metals-morning-1.svg", "resources/bg/metals-afternoon-0.svg", "resources/bg/metals-afternoon-1.svg", "resources/bg/metals-evening-0.svg", "resources/bg/metals-evening-1.svg", "resources/bg/metals-night-0.svg", "resources/bg/metals-night-1.svg"], "news": ["resources/bg/news-morning-0.svg", "resources/bg/news-morning-1.svg", "resources/bg/news-afternoon-0.svg", "resources/bg/news-afternoon-1.svg", "resources/bg/news-evening-0.svg", "resources/bg/news-evening-1.svg", "resources/bg/news-night-0.svg", "resources/bg/news-night-1.svg"], "schedule": ["resources/bg/schedule-morning-0.svg", "resources/bg/schedule-morning-1.svg", "resources/bg/schedule-afternoon-0.svg", "resources/bg/schedule-afternoon-1.svg", "resources/bg/schedule-evening-0.svg", "resources/bg/schedule-evening-1.svg", "resources/bg/schedule-night-0.svg", "resources/bg/schedule-night-1.svg"], "flights": ["resources/bg/flights-morning-0.svg", "resources/bg/flights-morning-1.svg", "resources/bg/flights-afternoon-0.svg", "resources/bg/flights-afternoon-1.svg", "resources/bg/flights-evening-0.svg", "resources/bg/flights-evening-1.svg", "resources/bg/flights-night-0.svg", "resources/bg/flights-night-1.svg"]};
+function panelOrder() {
+  let s = ''; try { s = localStorage.getItem('astros_order') || ''; } catch (e) {}
+  const byLabel = {}; IPAD_ORDER.forEach(p => { byLabel[p[1]] = p[0]; });
+  const list = s ? s.split(/[,，\s]+/).map(x => byLabel[x]).filter(Boolean) : [];
+  return list.length ? list : IPAD_ORDER.map(p => p[0]);
+}
+function labelOf(v) { const p = IPAD_ORDER.find(x => x[0] === v); return p ? p[1] : v; }
+renderPages = function () {
+  $('pages').innerHTML = panelOrder().map(v => '<span data-v="' + v + '"' + (v === CUR ? ' class="cur"' : '') + '>' + esc(labelOf(v)) + '</span>').join('');
+};
+function showPanel(v, save) {
+  if (!v) return;
+  CUR = v;
+  document.querySelectorAll('.panel').forEach(p => p.classList.toggle('on', p.dataset.v === v));
+  $('app').className = 'theme-' + THEME_OF[v];
+  BG_FILES = BG_MAP[v] || []; bgCur = -1; updateBg();
+  renderPages();
+  if (save !== false) try { localStorage.setItem('astros_cur', v); } catch (e) {}
+  setTimeout(() => window.dispatchEvent(new Event('resize')), 60);   // 숨어 있던 차트 다시 그리기
+  if (v === 'flights') refreshFlights();
+  if (v === 'schedule') renderSchedule();
+  if (v === 'latam' && kfItems.length) kfStart();                     // 기사 처음부터 다시(스크롤 재계산)
+}
+function step(d) { const o = panelOrder(), i = o.indexOf(CUR); showPanel(o[(i + d + o.length) % o.length]); }
+function fitStage() {
+  const s = Math.min(innerWidth / 2048, innerHeight / 1536), st = $('stage');
+  st.style.transform = 'translate(' + ((innerWidth - 2048 * s) / 2) + 'px,' + ((innerHeight - 1536 * s) / 2) + 'px) scale(' + s + ')';
+}
+function openSetup(force) {
+  const ov = $('setup');
+  $('in-api').value = getApiUrl();
+  try { $('in-order').value = localStorage.getItem('astros_order') || IPAD_ORDER.map(p => p[1]).join(','); } catch (e) {}
+  $('setup-msg').textContent = force ? '처음 한 번만 입력하면 이 iPad에 저장됩니다.' : '';
+  ov.style.display = 'flex';
+}
+function saveSetup() {
+  const u = $('in-api').value.trim(), o = $('in-order').value.trim();
+  if (!/^https:\/\/script\.google\.com\/macros\/s\/.+\/exec\?token=.+/.test(u)) { $('setup-msg').textContent = 'Apps Script 주소 형식이 아닙니다 (…/exec?token=… 까지 전체 입력)'; return; }
+  try { localStorage.setItem('astros_api', u); localStorage.setItem('astros_order', o); } catch (e) {}
+  $('setup').style.display = 'none';
+  renderPages(); refreshData();
+}
+(function ipadBoot() {
+  addEventListener('resize', fitStage); fitStage();
+  let x0 = null, y0 = null;
+  $('stage').addEventListener('touchstart', e => { const t = e.touches[0]; x0 = t.clientX; y0 = t.clientY; }, { passive: true });
+  $('stage').addEventListener('touchend', e => {
+    if (x0 === null) return;
+    const t = e.changedTouches[0], dx = t.clientX - x0, dy = t.clientY - y0;
+    if (Math.abs(dx) > 60 && Math.abs(dx) > Math.abs(dy) * 1.5 && $('setup').style.display !== 'flex') step(dx < 0 ? 1 : -1);
+    x0 = null;
+  }, { passive: true });
+  addEventListener('keydown', e => { if (e.key === 'ArrowRight') step(1); if (e.key === 'ArrowLeft') step(-1); });
+  $('pages').addEventListener('click', e => { const s = e.target.closest('span[data-v]'); if (s) showPanel(s.dataset.v); });
+  $('gear').addEventListener('click', () => openSetup(false));
+  $('btn-save').addEventListener('click', saveSetup);
+  $('btn-cancel').addEventListener('click', () => { if (getApiUrl()) $('setup').style.display = 'none'; });
+  let first = ''; try { first = localStorage.getItem('astros_cur') || ''; } catch (e) {}
+  showPanel(panelOrder().indexOf(first) >= 0 ? first : panelOrder()[0], false);
+  if (!getApiUrl()) openSetup(true);
+})();
+
+</script>
+</body>
+</html>
